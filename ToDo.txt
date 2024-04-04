@@ -1,0 +1,42 @@
+
+Open Tasks:
+
+[ ] generate new Words from a list
+
+[ ] Spawn new word that has to be typed in a given interval
+
+[ ] Delete words when typed
+
+[ ] Game over when no lives left
+
+- when first letter of word is typed, word is targeted
+- when word is targeted and first letter of other word is typed, target is not changed
+- when first letter of word is typed, word is reduced
+- when all letters of word are typed, word is marked as typed
+- with multiple words that start with same letter the one closest to gameover gets targeted
+
+
+process:
+- type letter
+- word targeter checks if word is targeted
+	- if targeted get input to word
+		-check if letter is correct
+			-if correct reduce word
+	- if none targeted target word closest to game over
+
+- input manager
+	- gets input
+	- sends input out
+	- words are listeners (when targeted they use the input)
+
+- word targeter
+	- sets targeted state in word
+
+- word generator
+	- generate random words
+
+
+Ressources:
+JavaFX Typing Game Almas Baimagambetov Youtube
+Test-Driven development in java fx with test fx Medium
+JavaFx-Komponenten mit TestFX testen Entwickler.de

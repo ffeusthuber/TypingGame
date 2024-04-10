@@ -5,12 +5,12 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class WordRepositoryTest {
     @Test
-    void givenAnIntegerAWordGetsReturned(){
+    void givenValidIntegerAWordGetsReturned(){
         Word expected = new Word("Apple");
         WordRepository wordRepositoryStub = new WordRepositoryStub();
-        int wordNumber = 0;
+        int wordIndex = 0;
 
-        Word actual = wordRepositoryStub.getWordByNumber(wordNumber);
+        Word actual = wordRepositoryStub.getWordByNumber(wordIndex);
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -18,10 +18,10 @@ public class WordRepositoryTest {
     @Test
     void givenAnIntegerOutOfRangeAnExceptionIsThrown(){
         WordRepository wordRepositoryStub = new WordRepositoryStub();
-        int wordNumber = 999;
+        int wordIndex = 999;
 
-        assertThatThrownBy(() -> wordRepositoryStub.getWordByNumber(wordNumber))
+        assertThatThrownBy(() -> wordRepositoryStub.getWordByNumber(wordIndex))
                 .isInstanceOf(IndexOutOfBoundsException.class)
-                .hasMessageContaining("Repository contains " + wordRepositoryStub.getNumberOfWords() + " word(s). " + wordNumber + " is out of range.");
+                .hasMessageContaining("Repository contains " + wordRepositoryStub.getNumberOfWords() + " word(s). " + wordIndex + " is out of range.");
     }
 }

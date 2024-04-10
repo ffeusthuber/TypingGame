@@ -1,7 +1,7 @@
 public class Word {
     private final String word;
     private String remainingWord;
-    private State state;
+    private boolean typed;
 
     public Word(String word) {
         if (word.isEmpty()) {
@@ -10,11 +10,30 @@ public class Word {
 
         this.word = word;
         this.remainingWord = word;
-        this.state = State.NOT_TYPED;
+        this.typed = false;
     }
 
-    public State getState() {
-        return this.state;
+
+
+    public void type(String letter) {
+        if (remainingWord.startsWith(letter)) {
+            remainingWord = remainingWord.substring(1);
+            if (remainingWord.isEmpty()) {
+                typed = true;
+            }
+        }
+    }
+
+    private String getWord() {
+        return this.word;
+    }
+
+    public String getRemainingWord() {
+        return this.remainingWord;
+    }
+
+    public boolean isTyped() {
+        return typed;
     }
 
     @Override
@@ -25,22 +44,5 @@ public class Word {
             return false;
         Word otherWord = (Word) obj;
         return otherWord.getWord().equals(this.word);
-    }
-
-    private String getWord() {
-        return this.word;
-    }
-
-    public void type(String letter) {
-        if (remainingWord.startsWith(letter)) {
-            remainingWord = remainingWord.substring(1);
-            if (remainingWord.isEmpty()) {
-                state = State.TYPED;
-            }
-        }
-    }
-
-    public String getRemainingWord() {
-        return this.remainingWord;
     }
 }

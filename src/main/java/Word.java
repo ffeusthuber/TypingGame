@@ -1,7 +1,10 @@
 public class Word {
     private final String word;
+    private String remainingWord;
+
     public Word(String word) {
         this.word = word;
+        this.remainingWord = word;
     }
 
     public Status getState() {
@@ -20,5 +23,15 @@ public class Word {
 
     private String getWord() {
         return this.word;
+    }
+
+    public void type(String letter) {
+        if(remainingWord.startsWith(letter)){
+            remainingWord = remainingWord.substring(1);
+        }
+    }
+
+    public String getRemainingWord() {
+        return this.remainingWord;
     }
 }

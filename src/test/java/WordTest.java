@@ -10,4 +10,24 @@ public class WordTest {
 
         assertThat(word1).isEqualTo(word2);
     }
+
+    @Test
+    void typingCorrectLetterShortensTheRemainingWord(){
+        Word word = new Word("Apple");
+
+        word.type("A");
+        String remaining = word.getRemainingWord();
+
+        assertThat(remaining).isEqualTo("pple");
+    }
+
+    @Test
+    void typingIncorrectLetterDoesNotChangeTheRemainingWord(){
+        Word word = new Word("Apple");
+
+        word.type("Z");
+        String remaining = word.getRemainingWord();
+
+        assertThat(remaining).isEqualTo("Apple");
+    }
 }

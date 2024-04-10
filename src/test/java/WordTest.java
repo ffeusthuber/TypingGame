@@ -6,21 +6,21 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class WordTest {
     @Test
-    void newlyCreatedWordGetsAssignedNotTypedState() {
-        Word word = new Word("A");
+    void newlyCreatedWordShouldHaveNotTypedState() {
+        Word word = new Word("Apple");
 
         assertThat(word.getState()).isEqualTo(State.NOT_TYPED);
     }
 
     @Test
-    void creatingAWordWithAnEmptyStringResultsInAnException() {
+    void creatingWordWithEmptyStringShouldThrowException() {
         assertThatThrownBy(() -> new Word(""))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("Word must not be empty");
     }
 
     @Test
-    void wordsAreEqualWhenTheirStringsMatch(){
+    void wordsWithSameStringShouldBeEqual(){
         Word word1 = new Word("Apple");
         Word word2 = new Word("Apple");
 
@@ -28,27 +28,25 @@ public class WordTest {
     }
 
     @Test
-    void typingCorrectLetterShortensTheRemainingWord(){
+    void typingCorrectLetterShouldShortenRemainingWord(){
         Word word = new Word("Apple");
 
         word.type("A");
-        String remaining = word.getRemainingWord();
 
-        assertThat(remaining).isEqualTo("pple");
+        assertThat(word.getRemainingWord()).isEqualTo("pple");
     }
 
     @Test
-    void typingIncorrectLetterDoesNotChangeTheRemainingWord(){
+    void typingIncorrectLetterShouldNotChangeRemainingWord(){
         Word word = new Word("Apple");
 
         word.type("Z");
-        String remaining = word.getRemainingWord();
 
-        assertThat(remaining).isEqualTo("Apple");
+        assertThat(word.getRemainingWord()).isEqualTo("Apple");
     }
 
     @Test
-    void whenEveryLetterInWordIsTypedInOrderStateIsSetToTyped(){
+    void typingEveryLetterOfWordInOrderShouldSetStateToTyped(){
         Word word = new Word("App");
 
         word.type("A");

@@ -1,14 +1,16 @@
 public class Word {
     private final String word;
     private String remainingWord;
+    private State state;
 
     public Word(String word) {
         this.word = word;
         this.remainingWord = word;
+        this.state = State.NOT_TYPED;
     }
 
-    public Status getState() {
-        return Status.NOT_TYPED;
+    public State getState() {
+        return this.state;
     }
 
     @Override
@@ -27,7 +29,12 @@ public class Word {
 
     public void type(String letter) {
         if(remainingWord.startsWith(letter)){
-            remainingWord = remainingWord.substring(1);
+            if(remainingWord.length() > 1){
+                remainingWord = remainingWord.substring(1);
+            } else if (remainingWord.length() == 1) {
+                remainingWord = "";
+                state = State.TYPED;
+            }
         }
     }
 

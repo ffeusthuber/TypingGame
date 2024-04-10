@@ -1,8 +1,16 @@
+import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class WordTest {
+    @Test
+    void newlyCreatedWordGetsAssignedNotTypedState() {
+        Word word = new Word("A");
+
+        AssertionsForClassTypes.assertThat(word.getState()).isEqualTo(State.NOT_TYPED);
+    }
+
     @Test
     void wordsAreEqualWhenTheirStringsMatch(){
         Word word1 = new Word("Apple");
@@ -29,5 +37,16 @@ public class WordTest {
         String remaining = word.getRemainingWord();
 
         assertThat(remaining).isEqualTo("Apple");
+    }
+
+    @Test
+    void whenEveryLetterInWordIsTypedInOrderStateIsSetToTyped(){
+        Word word = new Word("App");
+
+        word.type("A");
+        word.type("p");
+        word.type("p");
+
+        assertThat(word.getState()).isEqualTo(State.TYPED);
     }
 }

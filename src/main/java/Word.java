@@ -1,7 +1,7 @@
 public class Word {
     private final String word;
     private String remainingWord;
-    private State state;
+    private boolean typed;
 
     public Word(String word) {
         if (word.isEmpty()) {
@@ -10,11 +10,11 @@ public class Word {
 
         this.word = word;
         this.remainingWord = word;
-        this.state = State.NOT_TYPED;
+        this.typed = false;
     }
 
-    public State getState() {
-        return this.state;
+    public boolean isTyped() {
+        return typed;
     }
 
     @Override
@@ -35,7 +35,7 @@ public class Word {
         if (remainingWord.startsWith(letter)) {
             remainingWord = remainingWord.substring(1);
             if (remainingWord.isEmpty()) {
-                state = State.TYPED;
+                typed = true;
             }
         }
     }

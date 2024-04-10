@@ -9,7 +9,7 @@ public class WordTest {
     void newlyCreatedWordShouldHaveNotTypedState() {
         Word word = new Word("Apple");
 
-        assertThat(word.getState()).isEqualTo(State.NOT_TYPED);
+        assertThat(word.isTyped()).isFalse();
     }
 
     @Test
@@ -53,6 +53,6 @@ public class WordTest {
         word.type("p");
         word.type("p");
 
-        assertThat(word.getState()).isEqualTo(State.TYPED);
+        assertThat(word.isTyped()).isTrue();
     }
 }

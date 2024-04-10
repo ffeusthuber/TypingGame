@@ -13,8 +13,6 @@ public class Word {
         this.typed = false;
     }
 
-
-
     public void type(String letter) {
         if (remainingWord.startsWith(letter)) {
             remainingWord = remainingWord.substring(1);

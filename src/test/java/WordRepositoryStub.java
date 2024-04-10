@@ -1,14 +1,21 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class WordRepositoryStub implements WordRepository {
+    private final ArrayList<Word> words = new ArrayList<>(Arrays.asList(
+            new Word("Apple"),
+            new Word("Banana")));
+
     @Override
-    public Word getWordByNumber(int wordNumber) {
-        if(wordNumber >= getNumberOfWords()){
-            throw new IndexOutOfBoundsException("Repository contains " + getNumberOfWords() + " word(s). " + wordNumber + " is out of range.");
+    public Word getWordByIndex(int wordIndex) {
+        if(wordIndex >= getNumberOfWords()){
+            throw new IndexOutOfBoundsException("Repository contains " + getNumberOfWords() + " word(s). Index of " + wordIndex + " is out of range.");
         }
-        return new Word("Apple");
+        return words.get(wordIndex);
     }
 
     @Override
     public int getNumberOfWords() {
-        return 1;
+        return words.size();
     }
 }

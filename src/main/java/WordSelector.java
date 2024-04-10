@@ -1,11 +1,13 @@
 public class WordSelector {
     private final WordRepository wordRepository;
-    public WordSelector(WordRepository wordRepository) {
+    private final RandomNumbers randomNumberGenerator;
 
+    public WordSelector(WordRepository wordRepository, RandomNumbers randomNumberGenerator) {
         this.wordRepository = wordRepository;
+        this.randomNumberGenerator = randomNumberGenerator;
     }
 
-    public Word select(int wordNumber) {
-       return wordRepository.getWordByNumber(wordNumber);
+    public Word random() {
+        return wordRepository.getWordByIndex(randomNumberGenerator.nextInt());
     }
 }

@@ -10,7 +10,7 @@ public class WordRepositoryTest {
         WordRepository wordRepositoryStub = new WordRepositoryStub();
         int wordIndex = 0;
 
-        Word actual = wordRepositoryStub.getWordByNumber(wordIndex);
+        Word actual = wordRepositoryStub.getWordByIndex(wordIndex);
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -20,8 +20,8 @@ public class WordRepositoryTest {
         WordRepository wordRepositoryStub = new WordRepositoryStub();
         int wordIndex = 999;
 
-        assertThatThrownBy(() -> wordRepositoryStub.getWordByNumber(wordIndex))
+        assertThatThrownBy(() -> wordRepositoryStub.getWordByIndex(wordIndex))
                 .isInstanceOf(IndexOutOfBoundsException.class)
-                .hasMessageContaining("Repository contains " + wordRepositoryStub.getNumberOfWords() + " word(s). " + wordIndex + " is out of range.");
+                .hasMessageContaining("Repository contains " + wordRepositoryStub.getNumberOfWords() + " word(s). Index of " + wordIndex + " is out of range.");
     }
 }

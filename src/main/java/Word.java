@@ -32,11 +32,9 @@ public class Word {
     }
 
     public void type(String letter) {
-        if(remainingWord.startsWith(letter)){
-            if(remainingWord.length() > 1){
-                remainingWord = remainingWord.substring(1);
-            } else if (remainingWord.length() == 1) {
-                remainingWord = "";
+        if (remainingWord.startsWith(letter)) {
+            remainingWord = remainingWord.substring(1);
+            if (remainingWord.isEmpty()) {
                 state = State.TYPED;
             }
         }

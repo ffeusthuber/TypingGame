@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 public class WordTest {
     @Test
     void newlyCreatedWordGetsAssignedNotTypedState() {
-        Word word = new Word("A");
+        Word word = new Word("Apple");
 
         assertThat(word.getState()).isEqualTo(State.NOT_TYPED);
     }
@@ -48,7 +48,7 @@ public class WordTest {
     }
 
     @Test
-    void whenEveryLetterInWordIsTypedInOrderStateIsSetToTyped(){
+    void whenEveryLetterInWordIsTypedInOrderTheStateIsSetToTyped(){
         Word word = new Word("App");
 
         word.type("A");

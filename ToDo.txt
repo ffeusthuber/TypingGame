@@ -1,7 +1,7 @@
 
 Open Tasks:
 
-[ ] generate new Words from a list
+[ ] select new Words from a list
 
 [ ] Spawn new word that has to be typed in a given interval
 

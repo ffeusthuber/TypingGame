@@ -4,6 +4,10 @@ public class Word {
     private State state;
 
     public Word(String word) {
+        if (word.isEmpty()) {
+            throw new IllegalArgumentException("Word must not be empty");
+        }
+
         this.word = word;
         this.remainingWord = word;
         this.state = State.NOT_TYPED;

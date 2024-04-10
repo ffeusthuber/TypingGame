@@ -1,14 +1,22 @@
-import org.assertj.core.api.AssertionsForClassTypes;
+
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class WordTest {
     @Test
     void newlyCreatedWordGetsAssignedNotTypedState() {
         Word word = new Word("A");
 
-        AssertionsForClassTypes.assertThat(word.getState()).isEqualTo(State.NOT_TYPED);
+        assertThat(word.getState()).isEqualTo(State.NOT_TYPED);
+    }
+
+    @Test
+    void creatingAWordWithAnEmptyStringResultsInAnException() {
+        assertThatThrownBy(() -> new Word(""))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("Word must not be empty");
     }
 
     @Test

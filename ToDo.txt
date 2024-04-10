@@ -1,7 +1,9 @@
 
 Open Tasks:
 
-[ ] select new Words from a list
+[ ] select random Words from a repository (based on numbers)
+    [X] specific word gets returned
+    [ ] error gets thrown, when number is not in allowed range
 
 [ ] Spawn new word that has to be typed in a given interval
 

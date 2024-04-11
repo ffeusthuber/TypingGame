@@ -5,18 +5,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class WordSelectorTest {
 
-    private WordRepositoryStub wordRepository;
-    private RandomNumbersStub randomNumberGenerator;
+    private WordRepository wordRepositoryStub;
+    private RandomNumbersStub randomNumbersStub;
     private WordSelector wordSelector;
 
     @BeforeEach
     void setup(){
-         wordRepository = new WordRepositoryStub(
+         wordRepositoryStub = new WordRepositoryStub(
                  "Apple",
                  "Banana");
 
-        randomNumberGenerator = new RandomNumbersStub();
-        wordSelector = new WordSelector(wordRepository, randomNumberGenerator);
+        randomNumbersStub = new RandomNumbersStub();
+        wordSelector = new WordSelector(wordRepositoryStub, randomNumbersStub);
     }
 
     @Test
@@ -30,6 +30,6 @@ public class WordSelectorTest {
 
     @Test
     void randomNumberGeneratorGetsLimitedToNumberOfWordsInRepository() {
-        assertThat(wordRepository.getNumberOfWords()-1).isEqualTo(randomNumberGenerator.getUpperLimit());
+        assertThat(wordRepositoryStub.getNumberOfWords()-1).isEqualTo(randomNumbersStub.getUpperLimit());
     }
 }

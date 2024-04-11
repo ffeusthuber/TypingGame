@@ -17,11 +17,11 @@ public class WordRepositoryTest {
 
     @Test
     void givenAnIntegerOutOfRangeAnExceptionIsThrown(){
-        WordRepository wordRepositoryStub = new WordRepositoryStub("Apple");
-        int wordIndex = 999;
+        WordRepository wordRepository = new WordRepositoryImpl();
+        int wordIndex = wordRepository.getNumberOfWords() + 1;
 
-        assertThatThrownBy(() -> wordRepositoryStub.getWordByIndex(wordIndex))
+        assertThatThrownBy(() -> wordRepository.getWordByIndex(wordIndex))
                 .isInstanceOf(IndexOutOfBoundsException.class)
-                .hasMessageContaining("Repository contains " + wordRepositoryStub.getNumberOfWords() + " word(s). Index of " + wordIndex + " is out of range.");
+                .hasMessageContaining("Repository contains " + wordRepository.getNumberOfWords() + " word(s). Index of " + wordIndex + " is out of range.");
     }
 }

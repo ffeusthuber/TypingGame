@@ -1,9 +1,9 @@
 
 Open Tasks:
 
-[ ] select random Words from a repository (based on numbers)
+[X] select random Words from a repository (based on numbers)
     [X] specific word gets returned
-    [ ] error gets thrown, when number is not in allowed range
+    [X] error gets thrown, when number is not in allowed range
 
 [ ] Spawn new word that has to be typed in a given interval
 
@@ -11,11 +11,43 @@ Open Tasks:
 
 [ ] Game over when no lives left
 
+Game Objects:
++ Player
+    - Lives
++ Playing field (rename)
+    - Boundaries
+    - spawn-positions
++ WordSpawner
+    - spawn-interval
+    - spawn-positions
+    - RandomNumberGenerator (to select random Spawn position)
+    - WordSelector
+        * WordRepository
+        * RandomNumberGenerator (to select random word)
++ Words
+    - word
+    - remaining word
+    - position on field
+    - speed
+        *   min-speed (set in config?)
+        *   max-speed (set in config?)
++ GameMenu
+
+- when start-button is pushed game starts
+- when game is started player has 3 lives
+- when game is started, wordSpawner starts spawning random words
+- words get assigned a speed between min and max
+- when game is started, inputManager takes input
+- wordSpawner interval gets shorter over time
+- when game is started timer starts running
 - when first letter of word is typed, word is targeted
+    - with multiple words that start with same letter the one closest to game over gets targeted
 - when word is targeted and first letter of other word is typed, target is not changed
-- when first letter of word is typed, word is reduced
-- when all letters of word are typed, word is marked as typed
-- with multiple words that start with same letter the one closest to gameover gets targeted
+- when correct letter of targeted words remaining word is typed, remaining word is reduced
+- when all letters of remaining word are typed, word is marked as typed and set invisible / deleted
+- when a word reaches the lower game-field boundary a life gets taken from player
+- when the player has no lives left, game is over
+- when game is over menu gets displayed
 
 
 process:

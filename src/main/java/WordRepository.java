@@ -1,4 +1,4 @@
 public interface WordRepository {
-    Word getWordByIndex(int wordIndex);
+    String getWordByIndex(int wordIndex);
     int getNumberOfWords();
 }

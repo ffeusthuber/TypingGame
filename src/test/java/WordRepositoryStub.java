@@ -2,15 +2,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class WordRepositoryStub implements WordRepository {
-    private final ArrayList<Word> words;
+    private final ArrayList<String> words;
 
-    public WordRepositoryStub(Word... words) {
+    public WordRepositoryStub(String... words) {
         this.words = new ArrayList<>(Arrays.asList(words));
     }
 
 
     @Override
-    public Word getWordByIndex(int wordIndex) {
+    public String getWordByIndex(int wordIndex) {
         if(wordIndex >= getNumberOfWords()){
             throw new IndexOutOfBoundsException("Repository contains " + getNumberOfWords() + " word(s). Index of " + wordIndex + " is out of range.");
         }

@@ -12,8 +12,8 @@ public class WordSelectorTest {
     @BeforeEach
     void setup(){
          wordRepository = new WordRepositoryStub(
-                 new Word("Apple"),
-                 new Word("Banana"));
+                 "Apple",
+                 "Banana");
 
         randomNumberGenerator = new RandomNumbersStub();
         wordSelector = new WordSelector(wordRepository, randomNumberGenerator);
@@ -21,9 +21,9 @@ public class WordSelectorTest {
 
     @Test
     void randomWordGetsReturned(){
-        Word expected = new Word("Banana");
+        String expected = "Banana";
 
-        Word actual = wordSelector.random();
+        String actual = wordSelector.random();
 
         assertThat(actual).isEqualTo(expected);
     }

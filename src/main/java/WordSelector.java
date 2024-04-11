@@ -9,7 +9,7 @@ public class WordSelector {
         randomNumberGenerator.setUpperLimit(wordRepository.getNumberOfWords()-1);
     }
 
-    public Word random() {
+    public String random() {
         return wordRepository.getWordByIndex(randomNumberGenerator.nextInt());
     }
 }

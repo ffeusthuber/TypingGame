@@ -7,7 +7,7 @@ public class WordRepositoryTest {
     @Test
     void givenValidIntegerAWordGetsReturned(){
         Word expected = new Word("Apple");
-        WordRepository wordRepositoryStub = new WordRepositoryStub();
+        WordRepository wordRepositoryStub = new WordRepositoryStub(expected);
         int wordIndex = 0;
 
         Word actual = wordRepositoryStub.getWordByIndex(wordIndex);
@@ -17,7 +17,7 @@ public class WordRepositoryTest {
 
     @Test
     void givenAnIntegerOutOfRangeAnExceptionIsThrown(){
-        WordRepository wordRepositoryStub = new WordRepositoryStub();
+        WordRepository wordRepositoryStub = new WordRepositoryStub(new Word("Apple"));
         int wordIndex = 999;
 
         assertThatThrownBy(() -> wordRepositoryStub.getWordByIndex(wordIndex))

@@ -1,14 +1,26 @@
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class WordSelectorTest {
 
+    private WordRepositoryStub wordRepository;
+    private RandomNumbersStub randomNumberGenerator;
+    private WordSelector wordSelector;
+
+    @BeforeEach
+    void setup(){
+         wordRepository = new WordRepositoryStub(
+                 new Word("Apple"),
+                 new Word("Banana"));
+
+        randomNumberGenerator = new RandomNumbersStub();
+        wordSelector = new WordSelector(wordRepository, randomNumberGenerator);
+    }
+
     @Test
     void randomWordGetsReturned(){
-        WordRepositoryStub wordRepository = new WordRepositoryStub();
-        RandomNumbersStub randomNumberGenerator = new RandomNumbersStub(wordRepository.getNumberOfWords());
-        WordSelector wordSelector = new WordSelector(wordRepository, randomNumberGenerator);
         Word expected = new Word("Banana");
 
         Word actual = wordSelector.random();
@@ -18,12 +30,6 @@ public class WordSelectorTest {
 
     @Test
     void randomNumberGeneratorGetsLimitedToNumberOfWordsInRepository() {
-        WordRepositoryStub wordRepository = new WordRepositoryStub();
-        RandomNumbersStub randomNumberGenerator = new RandomNumbersStub(wordRepository.getNumberOfWords());
-        //TODO refactor so limit gets automatically set
-
-        new WordSelector(wordRepository, randomNumberGenerator);
-
-        assertThat(wordRepository.getNumberOfWords()).isEqualTo(randomNumberGenerator.getUpperLimit());
+        assertThat(wordRepository.getNumberOfWords()-1).isEqualTo(randomNumberGenerator.getUpperLimit());
     }
 }

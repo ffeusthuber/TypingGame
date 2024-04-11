@@ -5,6 +5,8 @@ public class WordSelector {
     public WordSelector(WordRepository wordRepository, RandomNumbers randomNumberGenerator) {
         this.wordRepository = wordRepository;
         this.randomNumberGenerator = randomNumberGenerator;
+
+        randomNumberGenerator.setUpperLimit(wordRepository.getNumberOfWords()-1);
     }
 
     public Word random() {

@@ -2,9 +2,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class WordRepositoryStub implements WordRepository {
-    private final ArrayList<Word> words = new ArrayList<>(Arrays.asList(
-            new Word("Apple"),
-            new Word("Banana")));
+    private final ArrayList<Word> words;
+
+    public WordRepositoryStub(Word... words) {
+        this.words = new ArrayList<>(Arrays.asList(words));
+    }
+
 
     @Override
     public Word getWordByIndex(int wordIndex) {

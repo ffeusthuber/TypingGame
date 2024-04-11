@@ -1,19 +1,13 @@
 public class RandomNumbersStub implements RandomNumbers {
-
-    int upperLimit;
-
+    private int upperLimit;
     @Override
-    public int nextInt() {
+    public int nextInt(int upperLimit) {
+        this.upperLimit = upperLimit;
         return 1;
     }
 
-    @Override
-    public void setUpperLimit(int upperLimit) {
-        this.upperLimit = upperLimit;
-    }
-
-    public int getUpperLimit() {
-        return this.upperLimit;
+    public int getUpperLimit(){
+        return upperLimit;
     }
 }
 

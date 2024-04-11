@@ -4,16 +4,15 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class WordSelectorTest {
-
-    private WordRepository wordRepositoryStub;
-    private RandomNumbersStub randomNumbersStub;
     private WordSelector wordSelector;
+    private RandomNumbersStub randomNumbersStub;
+    private WordRepository wordRepositoryStub;
 
     @BeforeEach
     void setup(){
-         wordRepositoryStub = new WordRepositoryStub(
-                 "Apple",
-                 "Banana");
+        wordRepositoryStub = new WordRepositoryStub(
+                "Apple",
+                "Banana");
 
         randomNumbersStub = new RandomNumbersStub();
         wordSelector = new WordSelector(wordRepositoryStub, randomNumbersStub);
@@ -29,7 +28,9 @@ public class WordSelectorTest {
     }
 
     @Test
-    void randomNumberGeneratorGetsLimitedToNumberOfWordsInRepository() {
-        assertThat(wordRepositoryStub.getNumberOfWords()-1).isEqualTo(randomNumbersStub.getUpperLimit());
+    void upperLimitPassedInRandomNumbersIsNumberOfWordsInRepositoryMinus1(){
+        wordSelector.random();
+
+        assertThat(randomNumbersStub.getUpperLimit()).isEqualTo(wordRepositoryStub.getNumberOfWords()-1);
     }
 }

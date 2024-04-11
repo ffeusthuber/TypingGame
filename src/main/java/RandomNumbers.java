@@ -1,6 +1,4 @@
 public interface RandomNumbers {
+    int nextInt(int upperLimit);
 
-    int nextInt();
-
-    void setUpperLimit(int upperLimit);
 }

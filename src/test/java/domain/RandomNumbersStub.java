@@ -1,3 +1,5 @@
+package domain;
+
 public class RandomNumbersStub implements RandomNumbers {
     private int upperLimit;
     @Override

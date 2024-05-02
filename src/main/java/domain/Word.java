@@ -1,3 +1,5 @@
+package domain;
+
 public class Word {
     private final String word;
     private String remainingWord;
@@ -5,7 +7,7 @@ public class Word {
 
     public Word(String word) {
         if (word.isEmpty()) {
-            throw new IllegalArgumentException("Word must not be empty");
+            throw new IllegalArgumentException("domain.Word must not be empty");
         }
 
         this.word = word;

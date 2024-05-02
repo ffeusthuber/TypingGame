@@ -1,3 +1,7 @@
+package domain;
+
+import adapter.in.WordRepository;
+
 import java.util.List;
 
 public class StringSelector {

@@ -1,3 +1,4 @@
+package domain;
 
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +17,7 @@ public class WordTest {
     void creatingWordWithEmptyStringShouldThrowException() {
         assertThatThrownBy(() -> new Word(""))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("Word must not be empty");
+                .hasMessageContaining("domain.Word must not be empty");
     }
 
     @Test

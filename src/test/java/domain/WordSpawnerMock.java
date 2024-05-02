@@ -1,3 +1,5 @@
+package domain;
+
 public class WordSpawnerMock implements WordSpawner {
     boolean spawnWasCalled;
 

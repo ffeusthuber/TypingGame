@@ -1,3 +1,7 @@
+package domain;
+
+import adapter.in.WordRepository;
+import adapter.in.WordRepositoryStub;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

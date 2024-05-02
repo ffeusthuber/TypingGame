@@ -1,3 +1,5 @@
+package domain;
+
 public class TypingGame {
     private final WordSpawner wordSpawner;
     private int playerLives;

@@ -1,4 +1,5 @@
+import java.util.List;
+
 public interface WordRepository {
-    String getWordByIndex(int wordIndex);
-    int getNumberOfWords();
+    List<String> getAll();
 }

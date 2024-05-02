@@ -1,3 +1,8 @@
+DB --> Adapter --> Port (Domain)
+
+TextFile with words --> populateWordlist --> fill List in StringSelector
+
+
 
 Open Tasks:
 
@@ -21,8 +26,8 @@ Game Objects:
     - spawn-interval
     - spawn-positions
     - RandomNumberGenerator (to select random Spawn position)
-    - WordSelector
-        * WordRepository
+    - StringSelector
+        * List<String> filled by WordRepository
         * RandomNumberGenerator (to select random word)
 + Words
     - word

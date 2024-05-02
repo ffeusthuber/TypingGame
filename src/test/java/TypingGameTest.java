@@ -22,4 +22,5 @@ public class TypingGameTest {
 
         assertThat(wordSpawner.spawnWasCalled()).isTrue();
     }
+
 }

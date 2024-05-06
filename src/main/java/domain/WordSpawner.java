@@ -1,20 +1,16 @@
 package domain;
 
-import util.RandomNumbers;
-
 public class WordSpawner {
     private final StringSelector stringSelector;
-    private final Position[] spawnPoints;
-    private final RandomNumbers randomNumbers;
+    private final SpawnPointSelector spawnPointSelector;
 
-    public WordSpawner(StringSelector stringSelector, RandomNumbers randomNumbers, Position... spawnPoints) {
+
+    public WordSpawner(StringSelector stringSelector, SpawnPointSelector spawnPointSelector) {
         this.stringSelector = stringSelector;
-        this.randomNumbers = randomNumbers;
-        this.spawnPoints = spawnPoints;
+        this.spawnPointSelector = spawnPointSelector;
     }
 
-    public Word spawn() {
-        int chosenSpawnPoint = randomNumbers.nextInt(spawnPoints.length-1);
-        return new Word(stringSelector.random(),spawnPoints[chosenSpawnPoint]);
+    public Word spawnOnRandomSpawnPoint() {
+        return new Word(stringSelector.random(),spawnPointSelector.random());
     }
 }

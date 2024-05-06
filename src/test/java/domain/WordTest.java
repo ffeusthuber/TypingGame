@@ -6,31 +6,32 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class WordTest {
+    private final Position spawnPosition = new Position(0,0);
     @Test
     void newlyCreatedWordShouldHaveNotTypedState() {
-        Word word = new Word("Apple");
+        Word word = new Word("Apple", spawnPosition);
 
         assertThat(word.isTyped()).isFalse();
     }
 
     @Test
     void creatingWordWithEmptyStringShouldThrowException() {
-        assertThatThrownBy(() -> new Word(""))
+        assertThatThrownBy(() -> new Word("",spawnPosition))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("domain.Word must not be empty");
+                .hasMessageContaining("Word must not be empty");
     }
 
     @Test
-    void wordsWithSameStringShouldBeEqual(){
-        Word word1 = new Word("Apple");
-        Word word2 = new Word("Apple");
+    void wordsWithSameStringAndPositionShouldBeEqual(){
+        Word word1 = new Word("Apple",spawnPosition);
+        Word word2 = new Word("Apple",spawnPosition);
 
         assertThat(word1).isEqualTo(word2);
     }
 
     @Test
     void typingCorrectLetterShouldShortenRemainingWord(){
-        Word word = new Word("Apple");
+        Word word = new Word("Apple", spawnPosition);
 
         word.type("A");
 
@@ -39,7 +40,7 @@ public class WordTest {
 
     @Test
     void typingIncorrectLetterShouldNotChangeRemainingWord(){
-        Word word = new Word("Apple");
+        Word word = new Word("Apple", spawnPosition);
 
         word.type("Z");
 
@@ -48,7 +49,7 @@ public class WordTest {
 
     @Test
     void typingEveryLetterOfWordInOrderShouldSetStateToTyped(){
-        Word word = new Word("App");
+        Word word = new Word("App",spawnPosition);
 
         word.type("A");
         word.type("p");

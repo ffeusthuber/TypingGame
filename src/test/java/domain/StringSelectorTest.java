@@ -4,13 +4,14 @@ import adapter.in.WordRepository;
 import adapter.in.WordRepositoryStub;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import util.RandomNumbersStub;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class StringSelectorTest {
-    private StringSelector stringSelector;
+    private StringSelectorImpl stringSelector;
     private RandomNumbersStub randomNumbersStub;
 
     @BeforeEach
@@ -19,8 +20,8 @@ public class StringSelectorTest {
                 "Apple",
                 "Banana");
 
-        randomNumbersStub = new RandomNumbersStub();
-        stringSelector = new StringSelector(wordRepositoryStub, randomNumbersStub);
+        randomNumbersStub = new RandomNumbersStub(1);
+        stringSelector = new StringSelectorImpl(wordRepositoryStub, randomNumbersStub);
     }
 
     @Test

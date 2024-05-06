@@ -4,13 +4,15 @@ public class Word {
     private final String word;
     private String remainingWord;
     private boolean typed;
+    private Position position;
 
-    public Word(String word) {
+    public Word(String word,Position position) {
         if (word.isEmpty()) {
-            throw new IllegalArgumentException("domain.Word must not be empty");
+            throw new IllegalArgumentException("Word must not be empty");
         }
 
         this.word = word;
+        this.position = position;
         this.remainingWord = word;
         this.typed = false;
     }
@@ -36,6 +38,10 @@ public class Word {
         return typed;
     }
 
+    private Position getPosition() {
+        return  this.position;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if(obj == this)
@@ -43,6 +49,8 @@ public class Word {
         if (!(obj instanceof Word))
             return false;
         Word otherWord = (Word) obj;
-        return otherWord.getWord().equals(this.word);
+        return (otherWord.getWord().equals(this.word) &&
+                otherWord.getPosition().equals(this.position));
     }
+
 }

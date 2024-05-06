@@ -1,6 +1,6 @@
 DB --> Adapter --> Port (Domain)
 
-TextFile with words --> populateWordlist --> fill List in domain.StringSelector
+TextFile with words --> populateWordlist --> fill List in domain.StringSelectorImpl
 
 
 
@@ -26,7 +26,7 @@ Game Objects:
     - spawn-interval
     - spawn-positions
     - RandomNumberGenerator (to select random Spawn position)
-    - domain.StringSelector
+    - domain.StringSelectorImpl
         * List<String> filled by adapter.in.WordRepository
         * RandomNumberGenerator (to select random word)
 + Words

@@ -1,4 +1,4 @@
-package domain;
+package util;
 
 public interface RandomNumbers {
     int nextInt(int upperLimit);

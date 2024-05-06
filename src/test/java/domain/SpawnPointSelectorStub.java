@@ -11,4 +11,5 @@ public class SpawnPointSelectorStub implements SpawnPointSelector {
     public Position random() {
         return toSelect;
     }
+
 }

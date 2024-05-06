@@ -40,7 +40,7 @@ public class StringSelectorTest {
     }
 
     @Test
-    void upperLimitPassedInRandomNumbersIsSizeOfWordListMinus1(){
+    void upperLimitPassedInRandomNumbersIsSetToNumberOfWords(){
         stringSelector.random();
 
         assertThat(randomNumbersStub.getUpperLimit()).isEqualTo(stringSelector.getWordList().size()-1);

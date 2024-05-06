@@ -16,4 +16,8 @@ public class SpawnPointSelectorImpl implements SpawnPointSelector {
         int chosenSpawnPointIndex = randomNumberGenerator.nextInt(spawnPoints.length-1);
         return spawnPoints[chosenSpawnPointIndex];
     }
+
+    public Position[] getSpawnPoints() {
+        return spawnPoints;
+    }
 }

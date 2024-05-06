@@ -20,4 +20,16 @@ public class SpawnPointSelectorTest {
 
         assertThat(actual).isEqualTo(expected);
     }
+
+    @Test
+    void upperLimitPassedInRandomNumbersIsSetToNumberOfSpawnPoints(){
+        RandomNumbersStub randomNumbersStub = new RandomNumbersStub(1);
+        Position spawnPoint1 = new Position(1,1);
+        Position spawnPoint2 = new Position(2,2);
+        SpawnPointSelectorImpl spawnPointSelector = new SpawnPointSelectorImpl(randomNumbersStub, spawnPoint1, spawnPoint2);
+
+        spawnPointSelector.random();
+
+        assertThat(randomNumbersStub.getUpperLimit()).isEqualTo(spawnPointSelector.getSpawnPoints().length-1);
+    }
 }

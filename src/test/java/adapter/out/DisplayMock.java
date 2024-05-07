@@ -2,16 +2,18 @@ package adapter.out;
 
 import domain.Word;
 
+import java.util.List;
+
 public class DisplayMock implements DisplayAdapter {
 
-    private Word displayedWord;
+    private List<Word> displayedWords;
 
     @Override
-    public void display(Word word) {
-        this.displayedWord = word;
+    public void display(List<Word> words) {
+        this.displayedWords = words;
     }
 
-    public Word getDisplayedWord() {
-        return this.displayedWord;
+    public List<Word> getDisplayedWords() {
+        return this.displayedWords;
     }
 }

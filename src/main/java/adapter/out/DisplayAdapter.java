@@ -2,6 +2,8 @@ package adapter.out;
 
 import domain.Word;
 
+import java.util.List;
+
 public interface DisplayAdapter {
-    void display(Word word);
+    void display(List<Word> words);
 }

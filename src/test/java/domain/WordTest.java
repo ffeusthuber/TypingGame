@@ -59,11 +59,11 @@ public class WordTest {
     }
 
     @Test
-    void moveReducesYPositionByOne(){
+    void moveDownReducesYPositionByGivenStepSize(){
         Word word = new Word("Apple",new Position(1,10));
 
-        word.move();
+        word.moveDown(2);
 
-        assertThat(word.getPosition().y()).isEqualTo(9);
+        assertThat(word.getPosition().y()).isEqualTo(8);
     }
 }

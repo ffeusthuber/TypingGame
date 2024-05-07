@@ -53,4 +53,8 @@ public class Word {
                 otherWord.getPosition().equals(this.position));
     }
 
+    @Override
+    public String toString() {
+        return this.remainingWord + " - " + this.position;
+    }
 }

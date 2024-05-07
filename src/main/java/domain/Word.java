@@ -38,8 +38,12 @@ public class Word {
         return typed;
     }
 
-    private Position getPosition() {
+    protected Position getPosition() {
         return  this.position;
+    }
+
+    public void move() {
+        this.position = new Position(this.position.x(), this.position.y()-1);
     }
 
     @Override
@@ -57,4 +61,5 @@ public class Word {
     public String toString() {
         return this.remainingWord + " - " + this.position;
     }
+
 }

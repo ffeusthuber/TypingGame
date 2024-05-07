@@ -57,4 +57,13 @@ public class WordTest {
 
         assertThat(word.isTyped()).isTrue();
     }
+
+    @Test
+    void moveReducesYPositionByOne(){
+        Word word = new Word("Apple",new Position(1,10));
+
+        word.move();
+
+        assertThat(word.getPosition().y()).isEqualTo(9);
+    }
 }

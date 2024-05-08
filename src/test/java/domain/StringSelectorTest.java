@@ -43,6 +43,6 @@ public class StringSelectorTest {
     void upperLimitPassedInRandomNumbersIsSetToNumberOfWords(){
         stringSelector.random();
 
-        assertThat(randomNumbersStub.getUpperLimit()).isEqualTo(stringSelector.getWordList().size()-1);
+        assertThat(randomNumbersStub.getUpperLimit()).isEqualTo(stringSelector.getWordList().size());
     }
 }

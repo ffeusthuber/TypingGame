@@ -18,7 +18,7 @@ public class StringSelectorImpl implements StringSelector {
     @Override
     public String random() {
         return wordList.get(
-                randomNumberGenerator.nextInt(wordList.size()-1));
+                randomNumberGenerator.nextInt(wordList.size()));
     }
 
     List<String> getWordList() {

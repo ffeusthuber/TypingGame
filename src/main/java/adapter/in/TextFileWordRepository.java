@@ -27,7 +27,6 @@ public class TextFileWordRepository implements WordRepository {
 
             String line;
             while ((line = reader.readLine()) != null) {
-                System.out.println(line);
                 words.add(line);
             }
         } catch (IOException e) {

@@ -30,6 +30,6 @@ public class SpawnPointSelectorTest {
 
         spawnPointSelector.random();
 
-        assertThat(randomNumbersStub.getUpperLimit()).isEqualTo(spawnPointSelector.getSpawnPoints().length-1);
+        assertThat(randomNumbersStub.getUpperLimit()).isEqualTo(spawnPointSelector.getSpawnPoints().length);
     }
 }

@@ -13,7 +13,7 @@ public class SpawnPointSelectorImpl implements SpawnPointSelector {
 
     @Override
     public Position random() {
-        int chosenSpawnPointIndex = randomNumberGenerator.nextInt(spawnPoints.length-1);
+        int chosenSpawnPointIndex = randomNumberGenerator.nextInt(spawnPoints.length);
         return spawnPoints[chosenSpawnPointIndex];
     }
 

@@ -20,5 +20,4 @@ public class TypingGameTest {
         assertThat(typingGame.getWordSpawner()).isNotNull();
         assertThat(typingGame.getDisplay()).isNotNull();
     }
-
 }

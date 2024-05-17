@@ -6,6 +6,11 @@ public class Word {
     private boolean typed;
     private Position position;
 
+
+    public Word(String word) {
+        this(word, new Position(0,0));
+    }
+
     public Word(String word,Position position) {
         if (word.isEmpty()) {
             throw new IllegalArgumentException("Word must not be empty");
@@ -16,6 +21,7 @@ public class Word {
         this.remainingWord = word;
         this.typed = false;
     }
+
 
     public void type(String letter) {
         if (remainingWord.startsWith(letter)) {

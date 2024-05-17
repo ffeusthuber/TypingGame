@@ -1,5 +1,6 @@
-package adapter.in;
+package adapter.out;
 
+import domain.port.out.WordRepository;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

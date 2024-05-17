@@ -1,4 +1,4 @@
-package adapter.out;
+package domain.port.out;
 
 import domain.Position;
 import domain.Word;
@@ -8,7 +8,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DisplayAdapterTest {
+public class DisplayPortTest {
     @Test
     void wordsGetDisplayed(){
         DisplayMock displayAdapter = new DisplayMock();

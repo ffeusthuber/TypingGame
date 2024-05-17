@@ -1,4 +1,6 @@
-package adapter.in;
+package adapter.out;
+
+import domain.port.out.WordRepository;
 
 import java.io.BufferedReader;
 import java.io.File;

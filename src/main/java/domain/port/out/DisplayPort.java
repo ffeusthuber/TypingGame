@@ -1,9 +1,9 @@
-package adapter.out;
+package domain.port.out;
 
 import domain.Word;
 
 import java.util.List;
 
-public interface DisplayAdapter {
+public interface DisplayPort {
     void display(List<Word> words);
 }

@@ -1,6 +1,6 @@
 package domain;
 
-import adapter.in.WordRepository;
+import domain.port.out.WordRepository;
 import util.RandomNumbers;
 
 import java.util.List;

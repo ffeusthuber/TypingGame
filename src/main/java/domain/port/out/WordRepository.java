@@ -1,4 +1,4 @@
-package adapter.in;
+package domain.port.out;
 
 import java.util.List;
 

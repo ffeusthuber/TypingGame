@@ -1,10 +1,10 @@
-package adapter.out;
+package domain.port.out;
 
 import domain.Word;
 
 import java.util.List;
 
-public class DisplayMock implements DisplayAdapter {
+public class DisplayMock implements DisplayPort {
 
     private List<Word> displayedWords;
 

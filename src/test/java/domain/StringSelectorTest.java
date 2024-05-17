@@ -1,7 +1,7 @@
 package domain;
 
-import adapter.in.WordRepository;
-import adapter.in.WordRepositoryStub;
+import domain.port.out.WordRepository;
+import domain.port.out.WordRepositoryStub;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import util.RandomNumbersStub;

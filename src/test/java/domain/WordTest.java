@@ -9,14 +9,14 @@ public class WordTest {
     private final Position spawnPosition = new Position(0,0);
     @Test
     void newlyCreatedWordShouldHaveNotTypedState() {
-        Word word = new Word("Apple", spawnPosition);
+        Word word = new Word("Apple");
 
         assertThat(word.isTyped()).isFalse();
     }
 
     @Test
     void creatingWordWithEmptyStringShouldThrowException() {
-        assertThatThrownBy(() -> new Word("",spawnPosition))
+        assertThatThrownBy(() -> new Word(""))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("Word must not be empty");
     }
@@ -31,7 +31,7 @@ public class WordTest {
 
     @Test
     void typingCorrectLetterShouldShortenRemainingWord(){
-        Word word = new Word("Apple", spawnPosition);
+        Word word = new Word("Apple");
 
         word.type("A");
 
@@ -40,7 +40,7 @@ public class WordTest {
 
     @Test
     void typingIncorrectLetterShouldNotChangeRemainingWord(){
-        Word word = new Word("Apple", spawnPosition);
+        Word word = new Word("Apple");
 
         word.type("Z");
 
@@ -49,7 +49,7 @@ public class WordTest {
 
     @Test
     void typingEveryLetterOfWordInOrderShouldSetStateToTyped(){
-        Word word = new Word("App",spawnPosition);
+        Word word = new Word("App");
 
         word.type("A");
         word.type("p");

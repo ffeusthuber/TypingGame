@@ -17,11 +17,11 @@ public class WordTargeterTest {
         wordsOnScreen.add(new Word("Banana"));
         WordTargeter wordTargeter = new WordTargeter();
 
-
         wordTargeter.targetByKey("A", wordsOnScreen);
-        Word actual = wordTargeter.getTarget();
+        Word target = wordTargeter.getTarget();
 
-        assertThat(actual).isEqualTo(expected);
+        assertThat(wordTargeter.hasTarget()).isTrue();
+        assertThat(target).isEqualTo(expected);
     }
 
     @Test
@@ -31,10 +31,23 @@ public class WordTargeterTest {
         wordsOnScreen.add(new Word("Banana"));
         WordTargeter wordTargeter = new WordTargeter();
 
-
         wordTargeter.targetByKey("Z", wordsOnScreen);
         Word actual = wordTargeter.getTarget();
 
+        assertThat(wordTargeter.hasTarget()).isFalse();
         assertThat(actual).isNull();
+    }
+
+    @Test
+    void whenTargetGetsDroppedTargetIsSetToNull(){
+        List<Word> wordsOnScreen = new ArrayList<>();
+        wordsOnScreen.add(new Word("Apple"));
+        WordTargeter wordTargeter = new WordTargeter();
+
+        wordTargeter.targetByKey("A", wordsOnScreen);
+
+        assertThat(wordTargeter.hasTarget()).isTrue();
+        wordTargeter.dropTarget();
+        assertThat(wordTargeter.hasTarget()).isFalse();
     }
 }

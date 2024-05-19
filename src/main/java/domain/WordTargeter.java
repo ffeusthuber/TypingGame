@@ -16,4 +16,12 @@ public class WordTargeter {
     public Word getTarget() {
         return this.target;
     }
+
+    public boolean hasTarget() {
+        return this.target != null;
+    }
+
+    public void dropTarget() {
+        this.target = null;
+    }
 }

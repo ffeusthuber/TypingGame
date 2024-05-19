@@ -1,0 +1,3 @@
+tdd
+hexagonal architecture
+javafx

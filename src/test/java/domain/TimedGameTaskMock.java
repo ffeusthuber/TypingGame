@@ -1,9 +1,8 @@
 package domain;
 
-import java.util.TimerTask;
 import java.util.concurrent.CountDownLatch;
 
-public class TimedGameTaskMock extends TimerTask {
+public class TimedGameTaskMock implements Runnable {
     private final CountDownLatch latch;
     private boolean wasCalled = false;
 

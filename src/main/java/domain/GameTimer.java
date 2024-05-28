@@ -1,8 +1,7 @@
 package domain;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -10,20 +9,22 @@ import java.util.concurrent.TimeUnit;
 public class GameTimer {
 
     private final ScheduledExecutorService scheduledExecutorService;
-    private final List<Runnable> tasks;
+    private final Map<Runnable,Integer> timedTasks;
 
     public GameTimer(){
         scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
-        tasks = new ArrayList<>();
+        timedTasks = new HashMap<>();
     }
 
-    public void addTimedTasks(Runnable... tasksToAdd) {
-        tasks.addAll(Arrays.asList(tasksToAdd));
+    public void addTimedTasks(Runnable taskToAdd, int rateInMs) {
+        timedTasks.put(taskToAdd,rateInMs);
     }
 
     public void start() {
-        for (Runnable task : tasks) {
-            scheduledExecutorService.schedule(task, 0, TimeUnit.MILLISECONDS);
+        for (Map.Entry<Runnable, Integer> entry : timedTasks.entrySet()) {
+            Runnable task = entry.getKey();
+            int intervalInMs = entry.getValue();
+            scheduledExecutorService.scheduleAtFixedRate(task, 0, intervalInMs, TimeUnit.MILLISECONDS);
         }
     }
 

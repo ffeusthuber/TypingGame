@@ -3,8 +3,12 @@ package domain;
 import java.util.concurrent.CountDownLatch;
 
 public class TimedGameTaskMock implements Runnable {
-    private final CountDownLatch latch;
+    private CountDownLatch latch;
     private boolean wasCalled = false;
+
+    public TimedGameTaskMock() {
+
+    }
 
     public TimedGameTaskMock(CountDownLatch latch) {
         this.latch = latch;

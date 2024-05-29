@@ -24,7 +24,17 @@ public class GameTimerTest {
     }
 
     @Test
-    void multipleTimedGameTaskGetRunWithSetRate() throws InterruptedException {
+    void timedTaskCanBeAddedWithRate(){
+        TimedGameTaskMock timedGameTaskMock = new TimedGameTaskMock();
+        int rateForTaskInMS = 20;
+
+        gameTimer.addTimedTasks(timedGameTaskMock, rateForTaskInMS);
+
+        assertThat(gameTimer.getRateOfRunningTask(timedGameTaskMock)).isEqualTo(rateForTaskInMS);
+    }
+
+    @Test
+    void multipleTimedGameTaskCanBeRun() throws InterruptedException {
         CountDownLatch latchTask1 = new CountDownLatch(1);
         TimedGameTaskMock timedGameTaskMock1 = new TimedGameTaskMock(latchTask1);
         CountDownLatch latchTask2 = new CountDownLatch(1);

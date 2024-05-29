@@ -23,8 +23,8 @@ public class GameTimer {
     public void start() {
         for (Map.Entry<Runnable, Integer> entry : timedTasks.entrySet()) {
             Runnable task = entry.getKey();
-            int intervalInMs = entry.getValue();
-            scheduledExecutorService.scheduleAtFixedRate(task, 0, intervalInMs, TimeUnit.MILLISECONDS);
+            int rateInMs = entry.getValue();
+            scheduledExecutorService.scheduleAtFixedRate(task, 0, rateInMs, TimeUnit.MILLISECONDS);
         }
     }
 
@@ -32,4 +32,7 @@ public class GameTimer {
         scheduledExecutorService.shutdownNow();
     }
 
+    public int getRateOfRunningTask(Runnable task) {
+        return timedTasks.get(task);
+    }
 }

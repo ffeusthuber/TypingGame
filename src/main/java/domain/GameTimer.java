@@ -32,7 +32,11 @@ public class GameTimer {
         scheduledExecutorService.shutdownNow();
     }
 
-    public int getRateOfRunningTask(Runnable task) {
+    public int getRateOfTimedTask(Runnable task) throws IllegalArgumentException{
+        if(task == null || !timedTasks.containsKey(task)) {
+            throw new IllegalArgumentException("No such task added");
+        }
+
         return timedTasks.get(task);
     }
 }

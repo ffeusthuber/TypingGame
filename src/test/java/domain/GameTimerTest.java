@@ -8,6 +8,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class GameTimerTest {
 
@@ -30,7 +31,20 @@ public class GameTimerTest {
 
         gameTimer.addTimedTasks(timedGameTaskMock, rateForTaskInMS);
 
-        assertThat(gameTimer.getRateOfRunningTask(timedGameTaskMock)).isEqualTo(rateForTaskInMS);
+        assertThat(gameTimer.getRateOfTimedTask(timedGameTaskMock)).isEqualTo(rateForTaskInMS);
+    }
+
+    @Test
+    void tryingToGetRateOfTaskThatWasNotAddedOrNullThrowsErrorMessage(){
+        TimedGameTaskMock timedGameTaskMock = new TimedGameTaskMock();
+
+        assertThatThrownBy(() -> gameTimer.getRateOfTimedTask(timedGameTaskMock))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("No such task added");
+
+        assertThatThrownBy(() -> gameTimer.getRateOfTimedTask(null))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("No such task added");
     }
 
     @Test

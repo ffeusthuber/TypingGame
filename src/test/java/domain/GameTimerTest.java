@@ -21,21 +21,46 @@ public class GameTimerTest {
 
     @AfterEach
     void cleanUp() {
-        gameTimer.stop();
+        gameTimer.stopTimedTasks();
     }
 
     @Test
     void timedTaskCanBeAddedWithRate(){
         TimedGameTaskMock timedGameTaskMock = new TimedGameTaskMock();
-        int rateForTaskInMS = 20;
+        int rateForTaskInMs = 20;
 
-        gameTimer.addTimedTasks(timedGameTaskMock, rateForTaskInMS);
+        gameTimer.addTimedTasks(timedGameTaskMock, rateForTaskInMs);
+        int actualRate = gameTimer.getRateOfTimedTask(timedGameTaskMock);
 
-        assertThat(gameTimer.getRateOfTimedTask(timedGameTaskMock)).isEqualTo(rateForTaskInMS);
+        assertThat(actualRate).isEqualTo(rateForTaskInMs);
     }
 
     @Test
-    void tryingToGetRateOfTaskThatWasNotAddedOrNullThrowsErrorMessage(){
+    void tasksRunningReflectsIfTasksAreRunning() {
+        assertThat(gameTimer.tasksRunning()).isFalse();
+
+        gameTimer.runTimedTasks();
+        assertThat(gameTimer.tasksRunning()).isTrue();
+
+        gameTimer.stopTimedTasks();
+        assertThat(gameTimer.tasksRunning()).isFalse();
+    }
+
+    @Test
+    void rateOfTimedTaskCanBeChangedAfterStarting() {
+        TimedGameTaskMock timedGameTaskMock = new TimedGameTaskMock();
+        int initialRateForTaskInMs = 20;
+        int newRateForTaskInMS = 40;
+        gameTimer.addTimedTasks(timedGameTaskMock, initialRateForTaskInMs);
+        gameTimer.runTimedTasks();
+
+        gameTimer.setRateForTimedTask(timedGameTaskMock, newRateForTaskInMS);
+
+        assertThat(gameTimer.getRateOfTimedTask(timedGameTaskMock)).isEqualTo(newRateForTaskInMS);
+    }
+
+    @Test
+    void tryingToGetOrSetRateOfTimedTaskThatWasNotAddedOrNullThrowsErrorMessage(){
         TimedGameTaskMock timedGameTaskMock = new TimedGameTaskMock();
 
         assertThatThrownBy(() -> gameTimer.getRateOfTimedTask(timedGameTaskMock))
@@ -43,6 +68,14 @@ public class GameTimerTest {
                 .hasMessageContaining("No such task added");
 
         assertThatThrownBy(() -> gameTimer.getRateOfTimedTask(null))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("No such task added");
+
+        assertThatThrownBy(() -> gameTimer.setRateForTimedTask(timedGameTaskMock,1))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("No such task added");
+
+        assertThatThrownBy(() -> gameTimer.setRateForTimedTask(null,1))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("No such task added");
     }
@@ -53,10 +86,10 @@ public class GameTimerTest {
         TimedGameTaskMock timedGameTaskMock1 = new TimedGameTaskMock(latchTask1);
         CountDownLatch latchTask2 = new CountDownLatch(1);
         TimedGameTaskMock timedGameTaskMock2 = new TimedGameTaskMock(latchTask2);
-
         gameTimer.addTimedTasks(timedGameTaskMock1, 20);
         gameTimer.addTimedTasks(timedGameTaskMock2, 20);
-        gameTimer.start();
+
+        gameTimer.runTimedTasks();
         boolean task1Completed =latchTask1.await(100, TimeUnit.MILLISECONDS);
         boolean task2Completed =latchTask2.await(100, TimeUnit.MILLISECONDS);
 

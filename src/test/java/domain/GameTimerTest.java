@@ -21,7 +21,7 @@ public class GameTimerTest {
 
     @AfterEach
     void cleanUp() {
-        gameTimer.stopTimedTasks();
+        gameTimer.stopRunningTasks();
     }
 
     @Test
@@ -42,7 +42,7 @@ public class GameTimerTest {
         gameTimer.runTimedTasks();
         assertThat(gameTimer.tasksRunning()).isTrue();
 
-        gameTimer.stopTimedTasks();
+        gameTimer.stopRunningTasks();
         assertThat(gameTimer.tasksRunning()).isFalse();
     }
 
@@ -97,5 +97,19 @@ public class GameTimerTest {
         assertThat(task2Completed).isTrue();
         assertThat(timedGameTaskMock1.wasCalled()).isTrue();
         assertThat(timedGameTaskMock2.wasCalled()).isTrue();
+    }
+
+    @Test
+    void runningTasksStopWhenStopped() {
+        TimedGameTaskMock timedGameTaskMock1 = new TimedGameTaskMock();
+        TimedGameTaskMock timedGameTaskMock2 = new TimedGameTaskMock();
+        gameTimer.addTimedTasks(timedGameTaskMock1, 20);
+        gameTimer.addTimedTasks(timedGameTaskMock2, 20);
+        gameTimer.runTimedTasks();
+
+        gameTimer.stopRunningTasks();
+
+        assertThat(gameTimer.getRunningTasks().size()).isEqualTo(0);
+        assertThat(gameTimer.tasksRunning()).isFalse();
     }
 }

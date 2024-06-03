@@ -7,14 +7,14 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
-public class GameTimer {
+public class TaskManager {
 
     private final ScheduledExecutorService scheduledExecutorService;
     private final Map<Runnable,Integer> timedTasks = new HashMap<>();
     private final Map<Runnable, ScheduledFuture<?>> runningTasks = new HashMap<>();
     private boolean tasksRunning = false;
 
-    public GameTimer(){
+    public TaskManager(){
         scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
     }
 
@@ -27,13 +27,8 @@ public class GameTimer {
         for (Map.Entry<Runnable, Integer> entry : timedTasks.entrySet()) {
             Runnable task = entry.getKey();
             int rateInMs = entry.getValue();
-            runTasks(task, rateInMs);
+            runTask(task, rateInMs);
         }
-    }
-
-    private void runTasks(Runnable task, int rateInMs) {
-        ScheduledFuture<?> scheduledTask = scheduledExecutorService.scheduleAtFixedRate(task, 0, rateInMs, TimeUnit.MILLISECONDS);
-        runningTasks.put(task, scheduledTask);
     }
 
     public void stopRunningTasks(){
@@ -59,8 +54,13 @@ public class GameTimer {
 
         timedTasks.put(task, rateInMs);
         if (tasksRunning) {
-            runTasks(task, rateInMs);
+            runTask(task, rateInMs);
         }
+    }
+
+    private void runTask(Runnable task, int rateInMs) {
+        ScheduledFuture<?> scheduledTask = scheduledExecutorService.scheduleAtFixedRate(task, 0, rateInMs, TimeUnit.MILLISECONDS);
+        runningTasks.put(task, scheduledTask);
     }
 
     private void checkValidity(Runnable task) {

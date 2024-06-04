@@ -34,7 +34,17 @@ public class WordSpawnerTest {
         wordSpawner.spawnOnRandomSpawnPoint();
 
         assertThat(gameField.getWords()).isEqualTo(List.of(word));
+    }
 
+    @Test
+    void wordSpawnerGetsBuiltWithSpawnPointsFromGameField() {
+        GameField gameField = new GameField();
+        Position spawnPoint = new Position(0,0);
+        gameField.addSpawnPoint(spawnPoint);
 
+        WordSpawner wordSpawner = WordSpawner.build(gameField);
+        SpawnPointSelectorImpl spawnPointSelector = (SpawnPointSelectorImpl) wordSpawner.spawnPointSelector;
+
+        assertThat(spawnPointSelector.getSpawnPoints()).isEqualTo(List.of(spawnPoint));
     }
 }

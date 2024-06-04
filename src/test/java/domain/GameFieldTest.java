@@ -29,4 +29,14 @@ public class GameFieldTest {
 
         assertThat(gameField.getWords()).isEqualTo(Collections.EMPTY_LIST);
     }
+
+    @Test
+    void spawnPointsCanBeAddedToGameField() {
+        Position position = new Position(0,0);
+        GameField gameField = new GameField();
+
+        gameField.addSpawnPoint(position);
+
+        assertThat(gameField.getSpawnPoints()).isEqualTo(List.of(position));
+    }
 }

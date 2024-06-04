@@ -24,6 +24,7 @@ import java.util.List;
 public class GameField {
 
     private final List<Word> words = new ArrayList<>();
+    private final List<Position> spawnPoints = new ArrayList<>();
     public void addWord(Word word) {
         words.add(word);
     }
@@ -34,5 +35,13 @@ public class GameField {
 
     public void removeWord(Word word) {
         words.remove(word);
+    }
+
+    public void addSpawnPoint(Position position) {
+        spawnPoints.add(position);
+    }
+
+    public List<Position> getSpawnPoints() {
+        return Collections.unmodifiableList(spawnPoints);
     }
 }

@@ -8,15 +8,19 @@ import util.RandomNumbers;
 public class WordSpawner implements Runnable{
     private final StringSelector stringSelector;
     private final SpawnPointSelector spawnPointSelector;
+    private final GameField gameField;
 
 
-    public WordSpawner(StringSelector stringSelector, SpawnPointSelector spawnPointSelector) {
+    public WordSpawner(StringSelector stringSelector, SpawnPointSelector spawnPointSelector, GameField gameField) {
         this.stringSelector = stringSelector;
         this.spawnPointSelector = spawnPointSelector;
+        this.gameField = gameField;
     }
 
     public Word spawnOnRandomSpawnPoint() {
-        return new Word(stringSelector.random(),spawnPointSelector.random());
+        Word word = new Word(stringSelector.random(),spawnPointSelector.random());
+        gameField.addWord(word);
+        return word;
     }
 
     @Override
@@ -24,7 +28,7 @@ public class WordSpawner implements Runnable{
         spawnOnRandomSpawnPoint();
     }
 
-    public static WordSpawner build() {
+    public static WordSpawner build(GameField gameField) {
         WordRepository wordRepository = new TextFileWordRepository("src/main/java/config/wordList.txt");
         RandomNumbers randomNumberGenerator = new RandomNumberGenerator();
         StringSelector stringSelector = new StringSelectorImpl(wordRepository, randomNumberGenerator);
@@ -33,6 +37,6 @@ public class WordSpawner implements Runnable{
                                                                            new Position(2,10),
                                                                            new Position(3,10));
 
-        return new WordSpawner(stringSelector, spawnPointSelector);
+        return new WordSpawner(stringSelector, spawnPointSelector, gameField);
     }
 }

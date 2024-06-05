@@ -43,7 +43,7 @@ public class WordSpawnerTest {
         Position spawnPoint = new Position(0,0);
         gameField.addSpawnPoint(spawnPoint);
 
-        WordSpawner wordSpawner = WordSpawner.build(gameField, new WordRepositoryStub());
+        WordSpawner wordSpawner = new WordSpawner(gameField, new WordRepositoryStub());
         SpawnPointSelectorImpl spawnPointSelector = (SpawnPointSelectorImpl) wordSpawner.getSpawnPointSelector();
 
         assertThat(spawnPointSelector.getSpawnPoints()).isEqualTo(List.of(spawnPoint));

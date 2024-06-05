@@ -16,6 +16,14 @@ public class WordSpawner implements Runnable{
         this.gameField = gameField;
     }
 
+    public WordSpawner(GameField gameField, WordRepository wordRepository) {
+        this.gameField = gameField;
+        RandomNumbers randomNumberGenerator = new RandomNumberGenerator();
+
+        this.stringSelector = new StringSelectorImpl(wordRepository, randomNumberGenerator);
+        this.spawnPointSelector = new SpawnPointSelectorImpl(randomNumberGenerator, gameField.getSpawnPoints());
+    }
+
     public Word spawnOnRandomSpawnPoint() {
         Word word = new Word(stringSelector.random(),spawnPointSelector.random());
         gameField.addWord(word);
@@ -25,15 +33,6 @@ public class WordSpawner implements Runnable{
     @Override
     public void run() {
         spawnOnRandomSpawnPoint();
-    }
-
-    public static WordSpawner build(GameField gameField, WordRepository wordRepository) {
-        RandomNumbers randomNumberGenerator = new RandomNumberGenerator();
-        StringSelector stringSelector = new StringSelectorImpl(wordRepository, randomNumberGenerator);
-        SpawnPointSelector spawnPointSelector = new SpawnPointSelectorImpl(randomNumberGenerator,
-                                                                           gameField.getSpawnPoints());
-
-        return new WordSpawner(stringSelector, spawnPointSelector, gameField);
     }
 
     public SpawnPointSelector getSpawnPointSelector() {

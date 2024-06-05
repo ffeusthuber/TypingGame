@@ -50,7 +50,7 @@ public class TypingGame {
     private WordSpawner setUpWordSpawner() {
         WordRepository wordRepository = new TextFileWordRepository("src/main/java/config/wordList.txt");
 
-        return WordSpawner.build(gameField,wordRepository);
+        return new WordSpawner(gameField,wordRepository);
     }
 
     public void start() {

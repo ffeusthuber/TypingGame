@@ -1,5 +1,6 @@
 package domain;
 
+import domain.port.out.WordRepositoryStub;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -42,7 +43,7 @@ public class WordSpawnerTest {
         Position spawnPoint = new Position(0,0);
         gameField.addSpawnPoint(spawnPoint);
 
-        WordSpawner wordSpawner = WordSpawner.build(gameField);
+        WordSpawner wordSpawner = WordSpawner.build(gameField, new WordRepositoryStub());
         SpawnPointSelectorImpl spawnPointSelector = (SpawnPointSelectorImpl) wordSpawner.getSpawnPointSelector();
 
         assertThat(spawnPointSelector.getSpawnPoints()).isEqualTo(List.of(spawnPoint));

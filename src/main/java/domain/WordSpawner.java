@@ -1,6 +1,5 @@
 package domain;
 
-import adapter.out.TextFileWordRepository;
 import domain.port.out.WordRepository;
 import util.RandomNumberGenerator;
 import util.RandomNumbers;
@@ -28,8 +27,7 @@ public class WordSpawner implements Runnable{
         spawnOnRandomSpawnPoint();
     }
 
-    public static WordSpawner build(GameField gameField) {
-        WordRepository wordRepository = new TextFileWordRepository("src/main/java/config/wordList.txt");
+    public static WordSpawner build(GameField gameField, WordRepository wordRepository) {
         RandomNumbers randomNumberGenerator = new RandomNumberGenerator();
         StringSelector stringSelector = new StringSelectorImpl(wordRepository, randomNumberGenerator);
         SpawnPointSelector spawnPointSelector = new SpawnPointSelectorImpl(randomNumberGenerator,

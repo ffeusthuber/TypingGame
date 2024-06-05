@@ -8,7 +8,7 @@ import util.RandomNumbers;
 public class WordSpawner implements Runnable{
     private final StringSelector stringSelector;
     private final GameField gameField;
-    final SpawnPointSelector spawnPointSelector;
+    private final SpawnPointSelector spawnPointSelector;
 
 
     public WordSpawner(StringSelector stringSelector, SpawnPointSelector spawnPointSelector, GameField gameField) {
@@ -36,5 +36,9 @@ public class WordSpawner implements Runnable{
                                                                            gameField.getSpawnPoints());
 
         return new WordSpawner(stringSelector, spawnPointSelector, gameField);
+    }
+
+    public SpawnPointSelector getSpawnPointSelector() {
+        return this.spawnPointSelector;
     }
 }

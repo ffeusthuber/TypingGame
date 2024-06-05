@@ -24,11 +24,14 @@ public class TypingGame {
 
     private void init(){
         this.playerLives = INITIAL_PLAYER_LIVES;
+        GameField gameField = new GameField();
+        gameField.addSpawnPoint(new Position(0,0));
+
         this.display = new ConsoleDisplay();
-        this.wordSpawner = WordSpawner.build();
+        this.wordSpawner = WordSpawner.build(gameField);
     }
 
     public void start() {
-        taskManager.runTimedTasks();
+        //taskManager.runTimedTasks();
     }
 }

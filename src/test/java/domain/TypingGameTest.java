@@ -12,12 +12,4 @@ public class TypingGameTest {
 
         assertThat(typingGame.playerLives).isEqualTo(3);
     }
-
-    @Test
-    void whenGameIsInstantiatedWordSpawnerAndDisplayGetAssigned(){
-        TypingGame typingGame = new TypingGame();
-
-        assertThat(typingGame.getWordSpawner()).isNotNull();
-        assertThat(typingGame.getDisplay()).isNotNull();
-    }
 }

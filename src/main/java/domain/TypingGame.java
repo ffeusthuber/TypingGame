@@ -11,6 +11,7 @@ public class TypingGame {
     private WordSpawner wordSpawner;
     private DisplayPort display;
     private TaskManager taskManager;
+    private GameField gameField;
 
 
     public TypingGame(){
@@ -24,14 +25,21 @@ public class TypingGame {
 
     private void init(){
         this.playerLives = INITIAL_PLAYER_LIVES;
-        GameField gameField = new GameField();
-        gameField.addSpawnPoint(new Position(0,0));
+        gameField = new GameField();
+        gameField.addSpawnPoint(new Position(0, 0));
 
         this.display = new ConsoleDisplay();
         this.wordSpawner = WordSpawner.build(gameField);
+        this.taskManager = new TaskManager();
+
+        taskManager.addTimedTasks(wordSpawner,1000);
     }
 
     public void start() {
-        //taskManager.runTimedTasks();
+        taskManager.runTimedTasks();
+    }
+
+    public GameField getGameField() {
+        return this.gameField;
     }
 }

@@ -10,6 +10,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class GameFieldTest {
 
     @Test
+    void whenInstantiatedGameFieldIsEmpty() {
+        GameField gameField = new GameField();
+
+        assertThat(gameField.getWords()).isEmpty();
+        assertThat(gameField.getSpawnPoints()).isEmpty();
+    }
+
+    @Test
     void wordsCanBeAddedToGameField() {
         Word word = new Word("Apple");
         GameField gameField = new GameField();

@@ -1,8 +1,9 @@
 package domain;
 
-import adapter.out.ConsoleDisplay;
 import adapter.out.TextFileWordRepository;
 import application.TypingGameApplication;
+import domain.port.in.KeyPressListener;
+import domain.port.in.KeyPressListenerImpl;
 import domain.port.out.DisplayPort;
 import domain.port.out.WordRepository;
 
@@ -14,7 +15,7 @@ public class TypingGame {
     private DisplayPort display;
     private TaskManager taskManager;
     private GameField gameField;
-
+    private KeyPressListener keyPressListener;
 
     public TypingGame(){
         init();
@@ -22,6 +23,7 @@ public class TypingGame {
 
 
     public TypingGame(TypingGameApplication typingGameApplication) {
+        this.display = typingGameApplication;
         init();
     }
 
@@ -30,19 +32,25 @@ public class TypingGame {
         this.gameField = setUpGameField();
         this.wordSpawner = setUpWordSpawner();
 
-        this.display = new ConsoleDisplay();
-        //this.wordSpawner = WordSpawner.build(gameField);
-        this.taskManager = new TaskManager();
 
-        taskManager.addTimedTasks(wordSpawner,1000);
+        this.taskManager = new TaskManager();
+        WordTargeter wordTargeter = new WordTargeter();
+        this.keyPressListener = new KeyPressListenerImpl(gameField, wordTargeter);
+
+        setUpTimedTasks();
+    }
+
+    private void setUpTimedTasks() {
+        taskManager.addTimedTasks(() -> wordSpawner.spawnOnRandomSpawnPoint(),2000);
+        taskManager.addTimedTasks(() -> display.display(gameField.getWords()), 200);
     }
 
     private GameField setUpGameField() {
         gameField = new GameField();
 
-        gameField.addSpawnPoint(new Position(1, 0));
-        gameField.addSpawnPoint(new Position(2, 0));
-        gameField.addSpawnPoint(new Position(3, 0));
+        gameField.addSpawnPoint(new Position(50, 0));
+        gameField.addSpawnPoint(new Position(300, 0));
+        gameField.addSpawnPoint(new Position(550, 0));
 
         return gameField;
     }
@@ -59,5 +67,9 @@ public class TypingGame {
 
     public GameField getGameField() {
         return this.gameField;
+    }
+
+    public KeyPressListener getKeyPressListener() {
+        return this.keyPressListener;
     }
 }

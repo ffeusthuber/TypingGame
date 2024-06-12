@@ -44,7 +44,7 @@ public class Word {
         return typed;
     }
 
-    protected Position getPosition() {
+    public Position getPosition() {
         return  this.position;
     }
 

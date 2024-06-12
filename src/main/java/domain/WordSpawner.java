@@ -4,7 +4,7 @@ import domain.port.out.WordRepository;
 import util.RandomNumberGenerator;
 import util.RandomNumbers;
 
-public class WordSpawner implements Runnable{
+public class WordSpawner{
     private final StringSelector stringSelector;
     private final GameField gameField;
     private final SpawnPointSelector spawnPointSelector;
@@ -28,11 +28,6 @@ public class WordSpawner implements Runnable{
         Word word = new Word(stringSelector.random(),spawnPointSelector.random());
         gameField.addWord(word);
         return word;
-    }
-
-    @Override
-    public void run() {
-        spawnOnRandomSpawnPoint();
     }
 
     public SpawnPointSelector getSpawnPointSelector() {

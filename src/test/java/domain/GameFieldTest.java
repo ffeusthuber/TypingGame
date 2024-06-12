@@ -47,4 +47,17 @@ public class GameFieldTest {
 
         assertThat(gameField.getSpawnPoints()).isEqualTo(List.of(position));
     }
+
+    @Test
+    void wordsAreMovedByTheCorrectStepSize() {
+        Word word = new Word("Apple", new Position(0, 0));
+        GameField gameField = new GameField();
+        gameField.addWord(word);
+
+        int stepSize = 10;
+        gameField.moveWords(stepSize);
+        Word expected = new Word("Apple", new Position(0, stepSize));
+
+        assertThat(word).isEqualTo(expected);
+    }
 }

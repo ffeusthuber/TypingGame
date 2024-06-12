@@ -32,17 +32,17 @@ public class TypingGame {
         this.gameField = setUpGameField();
         this.wordSpawner = setUpWordSpawner();
 
-
-        this.taskManager = new TaskManager();
-        WordTargeter wordTargeter = new WordTargeter();
-        this.keyPressListener = new KeyPressListenerImpl(gameField, wordTargeter);
+        this.keyPressListener = new KeyPressListenerImpl(gameField, new WordTargeter());
 
         setUpTimedTasks();
     }
 
     private void setUpTimedTasks() {
+        this.taskManager = new TaskManager();
+
         taskManager.addTimedTasks(() -> wordSpawner.spawnOnRandomSpawnPoint(),2000);
-        taskManager.addTimedTasks(() -> display.display(gameField.getWords()), 200);
+        taskManager.addTimedTasks(() -> display.display(gameField.getWords()), 16);
+        taskManager.addTimedTasks(() -> gameField.moveWords(1), 15);
     }
 
     private GameField setUpGameField() {

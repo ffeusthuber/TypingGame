@@ -48,8 +48,8 @@ public class Word {
         return  this.position;
     }
 
-    public void moveDown(int stepSize) {
-        this.position = new Position(this.position.x(), this.position.y()-stepSize);
+    public void moveY(int stepSize) {
+        this.position = new Position(this.position.x(), this.position.y()+stepSize);
     }
 
     @Override

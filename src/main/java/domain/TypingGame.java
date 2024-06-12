@@ -1,7 +1,5 @@
 package domain;
 
-import adapter.out.TextFileWordRepository;
-import application.TypingGameApplication;
 import domain.port.in.KeyPressListener;
 import domain.port.in.KeyPressListenerImpl;
 import domain.port.out.DisplayPort;
@@ -9,44 +7,32 @@ import domain.port.out.WordRepository;
 
 public class TypingGame {
     private static final int INITIAL_PLAYER_LIVES = 3;
+    private static final int DISPLAY_UPDATE_INTERVAL = 15;
+    private static final int WORD_MOVE_INTERVAL = 15;
+    private static final int WORD_MOVE_STEPSIZE = 1;
+    private static int wordSpawnInterval = 2000;
+
 
     protected int playerLives;
-    private WordSpawner wordSpawner;
-    private DisplayPort display;
-    private TaskManager taskManager;
-    private GameField gameField;
-    private KeyPressListener keyPressListener;
-
-    public TypingGame(){
-        init();
-    }
+    private final DisplayPort display;
+    private final WordSpawner wordSpawner;
+    private final KeyPressListener keyPressListener;
+    private final TaskManager taskManager;
+    private final GameField gameField;
 
 
-    public TypingGame(TypingGameApplication typingGameApplication) {
-        this.display = typingGameApplication;
-        init();
-    }
-
-    private void init(){
-        this.playerLives = INITIAL_PLAYER_LIVES;
-        this.gameField = setUpGameField();
-        this.wordSpawner = setUpWordSpawner();
-
+    public TypingGame(DisplayPort display, WordRepository wordRepository) {
+        this.display = display;
+        this.gameField = createGameField();
+        this.wordSpawner = new WordSpawner(gameField,wordRepository);
         this.keyPressListener = new KeyPressListenerImpl(gameField, new WordTargeter());
-
+        this.playerLives = INITIAL_PLAYER_LIVES;
+        this.taskManager = new TaskManager();
         setUpTimedTasks();
     }
 
-    private void setUpTimedTasks() {
-        this.taskManager = new TaskManager();
-
-        taskManager.addTimedTasks(() -> wordSpawner.spawnOnRandomSpawnPoint(),2000);
-        taskManager.addTimedTasks(() -> display.display(gameField.getWords()), 16);
-        taskManager.addTimedTasks(() -> gameField.moveWords(1), 15);
-    }
-
-    private GameField setUpGameField() {
-        gameField = new GameField();
+    private GameField createGameField() {
+        GameField gameField = new GameField();
 
         gameField.addSpawnPoint(new Position(50, 0));
         gameField.addSpawnPoint(new Position(300, 0));
@@ -55,11 +41,12 @@ public class TypingGame {
         return gameField;
     }
 
-    private WordSpawner setUpWordSpawner() {
-        WordRepository wordRepository = new TextFileWordRepository("src/main/java/config/wordList.txt");
-
-        return new WordSpawner(gameField,wordRepository);
+    private void setUpTimedTasks() {
+        taskManager.addTimedTasks(() -> wordSpawner.spawnOnRandomSpawnPoint(),wordSpawnInterval);
+        taskManager.addTimedTasks(() -> display.display(gameField.getWords()), DISPLAY_UPDATE_INTERVAL);
+        taskManager.addTimedTasks(() -> gameField.moveWords(WORD_MOVE_STEPSIZE), WORD_MOVE_INTERVAL);
     }
+
 
     public void start() {
         taskManager.runTimedTasks();

@@ -1,9 +1,11 @@
 package application;
 
+import adapter.out.TextFileWordRepository;
 import domain.TypingGame;
 import domain.Word;
 import domain.port.in.KeyPressListener;
 import domain.port.out.DisplayPort;
+import domain.port.out.WordRepository;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -20,13 +22,13 @@ public class TypingGameApplication extends Application implements DisplayPort {
 
     @Override
     public void start(Stage stage) {
-        TypingGame typingGame = new TypingGame(this);
+        DisplayPort display = this;
+        WordRepository wordRepository =new TextFileWordRepository("src/main/java/config/wordList.txt");
+        TypingGame typingGame = new TypingGame(display,wordRepository);
         keyPressListener = typingGame.getKeyPressListener();
         typingGame.start();
 
-
-        Label initialLabel = new Label("Press any key");
-        root = new Pane(initialLabel);
+        root = new Pane();
         Scene scene = new Scene(root, 640, 480);
         scene.setOnKeyPressed(this::handleKeyPressed);
 

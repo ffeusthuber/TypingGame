@@ -1,0 +1,12 @@
+[ ] add gameOver functionality
+    [ ] setUp gameOverZone on gameField
+    [ ] deduct playerLive when word is in zone
+    [ ] remove word from gameField
+    [ ] if word was targeted, drop target
+[ ] set random moveStepSize for words
+[ ] add more words
+[ ] add game enhancements
+    [ ] stopwatch
+    [ ] score
+[ ] make javaFx-application more beautiful
+    [ ] word view

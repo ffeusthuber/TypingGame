@@ -28,8 +28,4 @@ public class GameField {
     public List<Position> getSpawnPoints() {
         return Collections.unmodifiableList(spawnPoints);
     }
-
-    public void moveWords(int stepSize) {
-        words.forEach(word -> word.moveY(stepSize));
-    }
 }

@@ -5,6 +5,8 @@ import domain.port.in.KeyPressListenerImpl;
 import domain.port.out.DisplayPort;
 import domain.port.out.WordRepository;
 
+import java.util.List;
+
 public class TypingGame {
     private static final int INITIAL_PLAYER_LIVES = 3;
     private static final int DISPLAY_UPDATE_INTERVAL = 15;
@@ -44,9 +46,8 @@ public class TypingGame {
     private void setUpTimedTasks() {
         taskManager.addTimedTasks(() -> wordSpawner.spawnOnRandomSpawnPoint(),wordSpawnInterval);
         taskManager.addTimedTasks(() -> display.display(gameField.getWords()), DISPLAY_UPDATE_INTERVAL);
-        taskManager.addTimedTasks(() -> gameField.moveWords(WORD_MOVE_STEPSIZE), WORD_MOVE_INTERVAL);
+        taskManager.addTimedTasks(() -> this.moveWords(WORD_MOVE_STEPSIZE,gameField.getWords()),WORD_MOVE_INTERVAL);
     }
-
 
     public void start() {
         taskManager.runTimedTasks();
@@ -58,5 +59,9 @@ public class TypingGame {
 
     public KeyPressListener getKeyPressListener() {
         return this.keyPressListener;
+    }
+
+    void moveWords(int stepSize, List<Word> words) {
+        words.forEach(word -> word.moveY(stepSize));
     }
 }

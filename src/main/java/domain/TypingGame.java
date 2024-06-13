@@ -8,28 +8,27 @@ import domain.port.out.WordRepository;
 import java.util.List;
 
 public class TypingGame {
-    private static final int INITIAL_PLAYER_LIVES = 3;
     private static final int DISPLAY_UPDATE_INTERVAL = 15;
     private static final int WORD_MOVE_INTERVAL = 15;
     private static final int WORD_MOVE_STEPSIZE = 1;
     private static int wordSpawnInterval = 2000;
 
 
-    protected int playerLives;
+    private int playerLives;
     private final DisplayPort display;
     private final WordSpawner wordSpawner;
     private final KeyPressListener keyPressListener;
     private final TaskManager taskManager;
     private final GameField gameField;
 
-
-    public TypingGame(DisplayPort display, WordRepository wordRepository) {
+    public TypingGame(int initialPlayerLives, DisplayPort display, WordRepository wordRepository) {
+        this.playerLives = initialPlayerLives;
         this.display = display;
         this.gameField = createGameField();
         this.wordSpawner = new WordSpawner(gameField,wordRepository);
         this.keyPressListener = new KeyPressListenerImpl(gameField, new WordTargeter());
-        this.playerLives = INITIAL_PLAYER_LIVES;
         this.taskManager = new TaskManager();
+
         setUpTimedTasks();
     }
 
@@ -53,6 +52,19 @@ public class TypingGame {
         taskManager.runTimedTasks();
     }
 
+    void moveWords(int stepSize, List<Word> words) {
+        for(Word word : words){
+            word.moveY(stepSize);
+            if(wordInGameOverZone(word)) {
+                playerLives -= 1;
+            }
+        }
+    }
+
+    private boolean wordInGameOverZone(Word word) {
+        return word.getPosition().y() > gameField.getHeight();
+    }
+
     public GameField getGameField() {
         return this.gameField;
     }
@@ -61,7 +73,7 @@ public class TypingGame {
         return this.keyPressListener;
     }
 
-    void moveWords(int stepSize, List<Word> words) {
-        words.forEach(word -> word.moveY(stepSize));
+    public int getPlayerLives() {
+        return this.playerLives;
     }
 }

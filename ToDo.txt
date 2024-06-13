@@ -1,6 +1,6 @@
 [ ] add gameOver functionality
-    [ ] setUp gameOverZone on gameField
-    [ ] deduct playerLive when word is in zone
+    [X] setUp gameOverZone on gameField
+    [X] deduct playerLive when word is in zone
     [ ] remove word from gameField
     [ ] if word was targeted, drop target
 [ ] set random moveStepSize for words

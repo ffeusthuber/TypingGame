@@ -23,8 +23,8 @@ public class TypingGameApplication extends Application implements DisplayPort {
     @Override
     public void start(Stage stage) {
         DisplayPort display = this;
-        WordRepository wordRepository =new TextFileWordRepository("src/main/java/config/wordList.txt");
-        TypingGame typingGame = new TypingGame(display,wordRepository);
+        WordRepository wordRepository = new TextFileWordRepository("src/main/java/config/wordList.txt");
+        TypingGame typingGame = new TypingGame(3,display,wordRepository);
         keyPressListener = typingGame.getKeyPressListener();
         typingGame.start();
 

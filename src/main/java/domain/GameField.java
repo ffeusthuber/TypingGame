@@ -9,6 +9,8 @@ public class GameField {
     private final List<Word> words = new ArrayList<>();
     private final List<Position> spawnPoints = new ArrayList<>();
 
+    private int height;
+
     public void addWord(Word word) {
         words.add(word);
     }
@@ -28,4 +30,13 @@ public class GameField {
     public List<Position> getSpawnPoints() {
         return Collections.unmodifiableList(spawnPoints);
     }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public int getHeight() {
+        return this.height;
+    }
+
 }

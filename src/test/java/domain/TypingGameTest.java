@@ -44,7 +44,7 @@ public class TypingGameTest {
         typingGame.moveWords(10);
 
         assertThat(typingGame.getPlayerLives()).isEqualTo(2);
-        //assertThat(gameField.getWords()).isEmpty();
+        assertThat(gameField.getWords()).isEmpty();
     }
 
     private TypingGame initializeTypingGame(){

@@ -36,4 +36,7 @@ public class GameField {
         return this.height;
     }
 
+    public void moveWords(int stepSize) {
+        words.forEach(word -> word.moveY(stepSize));
+    }
 }

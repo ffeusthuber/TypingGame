@@ -10,7 +10,7 @@ public class TypingGameTest {
 
     @Test
     void whenGameIsStartedWordsGetSpawnedOnGameField() throws InterruptedException {
-        TypingGame typingGame = initializeTypingGame(3);
+        TypingGame typingGame = initializeTypingGame();
 
         typingGame.start();
         Thread.sleep(50);
@@ -20,31 +20,37 @@ public class TypingGameTest {
 
     @Test
     void wordsAreMovedByTheCorrectStepSize() {
-        TypingGame typingGame = initializeTypingGame(3);
+        TypingGame typingGame = initializeTypingGame();
         Word word = new Word("Apple", new Position(0, 0));
         GameField gameField = typingGame.getGameField();
         gameField.addWord(word);
         int stepSize = 10;
 
-        typingGame.moveWords(stepSize,gameField.getWords());
+        typingGame.moveWords(stepSize);
 
         Word expected = new Word("Apple", new Position(0, stepSize));
         assertThat(word).isEqualTo(expected);
     }
 
     @Test
-    void whenAWordMovesInGameOverZoneAPlayerLiveGetsRemoved() {
+    void playerLosesLifeAndWordIsRemovedWhenWordReachesGameOverZone() {
         int initialPlayerLives = 3;
         TypingGame typingGame = initializeTypingGame(initialPlayerLives);
         GameField gameField = typingGame.getGameField();
-        Word word = new Word("Apple",new Position(0,95));
+        int gameFieldHeight = gameField.getHeight();
+        Word word = new Word("Apple",new Position(0,gameFieldHeight-1));
         gameField.addWord(word);
 
-        typingGame.moveWords(10,gameField.getWords());
+        typingGame.moveWords(10);
 
         assertThat(typingGame.getPlayerLives()).isEqualTo(2);
+        //assertThat(gameField.getWords()).isEmpty();
     }
 
+    private TypingGame initializeTypingGame(){
+        int initialPlayerLives = 3;
+        return new TypingGame(initialPlayerLives, new ConsoleDisplay(), new WordRepositoryStub("word"));
+    }
     private TypingGame initializeTypingGame(int initialPlayerLives){
         return new TypingGame(initialPlayerLives, new ConsoleDisplay(), new WordRepositoryStub("word"));
     }

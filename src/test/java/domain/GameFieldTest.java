@@ -42,4 +42,16 @@ public class GameFieldTest {
 
         assertThat(gameField.getWords()).isEqualTo(Collections.EMPTY_LIST);
     }
+
+    @Test
+    void wordsAreMovedByTheCorrectStepSize() {
+        Word word = new Word("Apple",new Position(0,0));
+        gameField.addWord(word);
+        int stepSize = 10;
+
+        gameField.moveWords(stepSize);
+
+        Word expected = new Word("Apple", new Position(0, stepSize));
+        assertThat(gameField.getWords().get(0)).isEqualTo(expected);
+    }
 }

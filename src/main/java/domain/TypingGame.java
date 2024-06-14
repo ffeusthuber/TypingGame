@@ -1,10 +1,11 @@
 package domain;
 
+import domain.port.in.KeyPressHandler;
 import domain.port.in.KeyPressListener;
-import domain.port.in.KeyPressListenerImpl;
 import domain.port.out.DisplayPort;
 import domain.port.out.WordRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TypingGame {
@@ -26,7 +27,7 @@ public class TypingGame {
         this.display = display;
         this.gameField = createGameField();
         this.wordSpawner = new WordSpawner(gameField,wordRepository);
-        this.keyPressListener = new KeyPressListenerImpl(gameField, new WordTargeter());
+        this.keyPressListener = new KeyPressHandler(gameField, new WordTargeter());
         this.taskManager = new TaskManager();
 
         setUpTimedTasks();
@@ -44,18 +45,21 @@ public class TypingGame {
     private void setUpTimedTasks() {
         taskManager.addTimedTasks(() -> wordSpawner.spawnOnRandomSpawnPoint(),wordSpawnInterval);
         taskManager.addTimedTasks(() -> display.display(gameField.getWords()), DISPLAY_UPDATE_INTERVAL);
-        taskManager.addTimedTasks(() -> this.moveWords(WORD_MOVE_STEPSIZE,gameField.getWords()),WORD_MOVE_INTERVAL);
+        taskManager.addTimedTasks(() -> this.moveWords(WORD_MOVE_STEPSIZE),WORD_MOVE_INTERVAL);
     }
 
     public void start() {
         taskManager.runTimedTasks();
     }
 
-    void moveWords(int stepSize, List<Word> words) {
-        for(Word word : words){
-            word.moveY(stepSize);
-            if(wordInGameOverZone(word)) {
+    void moveWords(int stepSize) {
+        gameField.moveWords(stepSize);
+
+        List<Word> words = new ArrayList<>(gameField.getWords());
+        for (Word word : words) {
+            if (wordInGameOverZone(word)) {
                 playerLives -= 1;
+                gameField.removeWord(word);
             }
         }
     }

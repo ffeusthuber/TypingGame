@@ -1,5 +1,6 @@
 package domain;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
@@ -9,18 +10,23 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class GameFieldTest {
 
+    private GameField gameField;
+
+    @BeforeEach
+    void setUpGameField() {
+        int gameFieldHeight = 100;
+        List<Position> spawnPoints = List.of(new Position(0,0));
+        gameField = new GameField(gameFieldHeight,spawnPoints);
+    }
+
     @Test
     void whenInstantiatedGameFieldIsEmpty() {
-        GameField gameField = new GameField();
-
         assertThat(gameField.getWords()).isEmpty();
-        assertThat(gameField.getSpawnPoints()).isEmpty();
     }
 
     @Test
     void wordsCanBeAddedToGameField() {
         Word word = new Word("Apple");
-        GameField gameField = new GameField();
 
         gameField.addWord(word);
 
@@ -30,21 +36,10 @@ public class GameFieldTest {
     @Test
     void wordsCanBeRemovedFromGameField() {
         Word word = new Word("Apple");
-        GameField gameField = new GameField();
         gameField.addWord(word);
 
         gameField.removeWord(word);
 
         assertThat(gameField.getWords()).isEqualTo(Collections.EMPTY_LIST);
-    }
-
-    @Test
-    void spawnPointsCanBeAddedToGameField() {
-        Position position = new Position(0,0);
-        GameField gameField = new GameField();
-
-        gameField.addSpawnPoint(position);
-
-        assertThat(gameField.getSpawnPoints()).isEqualTo(List.of(position));
     }
 }

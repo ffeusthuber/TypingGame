@@ -1,6 +1,7 @@
 package domain;
 
 import domain.port.out.WordRepositoryStub;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -9,12 +10,24 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class WordSpawnerTest {
 
+    private GameField gameField;
+    private StringSelector stringSelector;
+    private SpawnPointSelector spawnPointSelector;
+    private Position spawnPoint;
+
+    @BeforeEach
+    void setUp() {
+        int gameFieldHeight = 100;
+        spawnPoint = new Position(1, 1);
+        List<Position> spawnPoints = List.of(spawnPoint);
+        gameField = new GameField(gameFieldHeight,spawnPoints);
+        stringSelector = new StringSelectorStub("Banana");
+        spawnPoint = new Position(1, 1);
+        spawnPointSelector = new SpawnPointSelectorStub(spawnPoint);
+    }
+
     @Test
     void whenSpawnIsCalledWordIsSpawnedOnRandomSpawnPoint() {
-        GameField gameField = new GameField();
-        StringSelector stringSelector = new StringSelectorStub("Banana");
-        Position spawnPoint = new Position(1,1);
-        SpawnPointSelector spawnPointSelector = new SpawnPointSelectorStub(spawnPoint);
         WordSpawner wordSpawner = new WordSpawner(stringSelector, spawnPointSelector,gameField);
         Word expected = new Word("Banana", spawnPoint);
 
@@ -25,10 +38,6 @@ public class WordSpawnerTest {
 
     @Test
     void spawnedWordsGetAddedToGameField() {
-        GameField gameField = new GameField();
-        StringSelector stringSelector = new StringSelectorStub("Banana");
-        Position spawnPoint = new Position(1,1);
-        SpawnPointSelector spawnPointSelector = new SpawnPointSelectorStub(spawnPoint);
         WordSpawner wordSpawner = new WordSpawner(stringSelector, spawnPointSelector,gameField);
         Word word = new Word("Banana", spawnPoint);
 
@@ -39,10 +48,6 @@ public class WordSpawnerTest {
 
     @Test
     void wordSpawnerGetsBuiltWithSpawnPointsFromGameField() {
-        GameField gameField = new GameField();
-        Position spawnPoint = new Position(0,0);
-        gameField.addSpawnPoint(spawnPoint);
-
         WordSpawner wordSpawner = new WordSpawner(gameField, new WordRepositoryStub());
         SpawnPointSelectorImpl spawnPointSelector = (SpawnPointSelectorImpl) wordSpawner.getSpawnPointSelector();
 

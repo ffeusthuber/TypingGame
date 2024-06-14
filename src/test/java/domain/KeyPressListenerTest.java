@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -16,7 +17,9 @@ public class KeyPressListenerTest {
 
     @BeforeEach
     void setUp() {
-        gameField = new GameField();
+        int gameFieldHeight = 100;
+        List<Position> spawnPoints = List.of(new Position(0,0));
+        gameField = new GameField(gameFieldHeight, spawnPoints);
         wordTargeter = new WordTargeter();
         keyPressListener = new KeyPressListenerImpl(gameField, wordTargeter);
     }

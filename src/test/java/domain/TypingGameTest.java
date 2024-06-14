@@ -22,13 +22,13 @@ public class TypingGameTest {
     void wordsAreMovedByTheCorrectStepSize() {
         TypingGame typingGame = initializeTypingGame(3);
         Word word = new Word("Apple", new Position(0, 0));
-        GameField gameField = new GameField();
+        GameField gameField = typingGame.getGameField();
         gameField.addWord(word);
         int stepSize = 10;
-        Word expected = new Word("Apple", new Position(0, stepSize));
 
         typingGame.moveWords(stepSize,gameField.getWords());
 
+        Word expected = new Word("Apple", new Position(0, stepSize));
         assertThat(word).isEqualTo(expected);
     }
 
@@ -36,8 +36,7 @@ public class TypingGameTest {
     void whenAWordMovesInGameOverZoneAPlayerLiveGetsRemoved() {
         int initialPlayerLives = 3;
         TypingGame typingGame = initializeTypingGame(initialPlayerLives);
-        GameField gameField = new GameField();
-        gameField.setHeight(100);
+        GameField gameField = typingGame.getGameField();
         Word word = new Word("Apple",new Position(0,95));
         gameField.addWord(word);
 

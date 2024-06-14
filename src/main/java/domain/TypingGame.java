@@ -33,13 +33,12 @@ public class TypingGame {
     }
 
     private GameField createGameField() {
-        GameField gameField = new GameField();
+        int gameFieldHeight = 100;
+        List<Position> spawnPoints = List.of(new Position(50, 0),
+                                             new Position(300, 0),
+                                             new Position(550, 0));
 
-        gameField.addSpawnPoint(new Position(50, 0));
-        gameField.addSpawnPoint(new Position(300, 0));
-        gameField.addSpawnPoint(new Position(550, 0));
-
-        return gameField;
+        return new GameField(gameFieldHeight,spawnPoints);
     }
 
     private void setUpTimedTasks() {

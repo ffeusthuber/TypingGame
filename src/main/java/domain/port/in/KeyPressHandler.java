@@ -4,11 +4,11 @@ import domain.GameField;
 import domain.Word;
 import domain.WordTargeter;
 
-public class KeyPressListenerImpl implements KeyPressListener{
+public class KeyPressHandler implements KeyPressListener{
     private final GameField gameField;
     private final WordTargeter wordTargeter;
 
-    public KeyPressListenerImpl(GameField gameField, WordTargeter wordTargeter) {
+    public KeyPressHandler(GameField gameField, WordTargeter wordTargeter) {
         this.gameField = gameField;
         this.wordTargeter = wordTargeter;
     }

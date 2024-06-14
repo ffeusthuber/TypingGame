@@ -1,7 +1,7 @@
 package domain;
 
+import domain.port.in.KeyPressHandler;
 import domain.port.in.KeyPressListener;
-import domain.port.in.KeyPressListenerImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,10 +10,10 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class KeyPressListenerTest {
+public class KeyPressHandlerTest {
     private GameField gameField;
     private WordTargeter wordTargeter;
-    private KeyPressListener keyPressListener;
+    private KeyPressListener keyPressHandler;
 
     @BeforeEach
     void setUp() {
@@ -21,7 +21,7 @@ public class KeyPressListenerTest {
         List<Position> spawnPoints = List.of(new Position(0,0));
         gameField = new GameField(gameFieldHeight, spawnPoints);
         wordTargeter = new WordTargeter();
-        keyPressListener = new KeyPressListenerImpl(gameField, wordTargeter);
+        keyPressHandler = new KeyPressHandler(gameField, wordTargeter);
     }
 
     @Test
@@ -29,7 +29,7 @@ public class KeyPressListenerTest {
         Word word = new Word("Apple");
         gameField.addWord(word);
 
-        keyPressListener.onKeyPressed("A");
+        keyPressHandler.onKeyPressed("A");
 
         assertThat(wordTargeter.getTarget()).isEqualTo(word);
     }
@@ -39,7 +39,7 @@ public class KeyPressListenerTest {
         Word word = new Word("Apple");
         gameField.addWord(word);
 
-        keyPressListener.onKeyPressed("A");
+        keyPressHandler.onKeyPressed("A");
 
         assertThat(word.getRemainingWord()).isEqualTo("pple");
     }
@@ -49,9 +49,9 @@ public class KeyPressListenerTest {
         Word word = new Word("abc");
         gameField.addWord(word);
 
-        keyPressListener.onKeyPressed("a");
-        keyPressListener.onKeyPressed("b");
-        keyPressListener.onKeyPressed("c");
+        keyPressHandler.onKeyPressed("a");
+        keyPressHandler.onKeyPressed("b");
+        keyPressHandler.onKeyPressed("c");
 
         assertThat(gameField.getWords()).isEqualTo(Collections.EMPTY_LIST);
         assertThat(wordTargeter.hasTarget()).isFalse();

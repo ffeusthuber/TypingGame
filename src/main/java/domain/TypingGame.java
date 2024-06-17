@@ -5,7 +5,6 @@ import domain.port.in.KeyPressListener;
 import domain.port.out.DisplayPort;
 import domain.port.out.WordRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TypingGame {
@@ -13,6 +12,7 @@ public class TypingGame {
     private static final int WORD_MOVE_INTERVAL = 15;
     private static final int WORD_MOVE_STEPSIZE = 1;
     private static int wordSpawnInterval = 2000;
+    private final WordTargeter wordTargeter;
 
 
     private int playerLives;
@@ -27,7 +27,8 @@ public class TypingGame {
         this.display = display;
         this.gameField = createGameField();
         this.wordSpawner = new WordSpawner(gameField,wordRepository);
-        this.keyPressListener = new KeyPressHandler(gameField, new WordTargeter());
+        this.wordTargeter = new WordTargeter();
+        this.keyPressListener = new KeyPressHandler(gameField, wordTargeter);
         this.taskManager = new TaskManager();
 
         setUpTimedTasks();
@@ -55,17 +56,14 @@ public class TypingGame {
     void moveWords(int stepSize) {
         gameField.moveWords(stepSize);
 
-        List<Word> words = new ArrayList<>(gameField.getWords());
-        for (Word word : words) {
-            if (wordInGameOverZone(word)) {
-                playerLives -= 1;
-                gameField.removeWord(word);
+        List<Word> wordsInGameOverZone = gameField.getWordsInGameOverZone();
+        for (Word word : wordsInGameOverZone) {
+            playerLives -= 1;
+            gameField.removeWord(word);
+            if(wordTargeter.hasTarget() && wordTargeter.getTarget().equals(word)){
+                wordTargeter.dropTarget();
             }
         }
-    }
-
-    private boolean wordInGameOverZone(Word word) {
-        return word.getPosition().y() > gameField.getHeight();
     }
 
     public GameField getGameField() {
@@ -78,5 +76,9 @@ public class TypingGame {
 
     public int getPlayerLives() {
         return this.playerLives;
+    }
+
+    public WordTargeter getWordTargeter() {
+        return this.wordTargeter;
     }
 }

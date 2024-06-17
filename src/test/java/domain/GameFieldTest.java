@@ -54,4 +54,19 @@ public class GameFieldTest {
         Word expected = new Word("Apple", new Position(0, stepSize));
         assertThat(gameField.getWords().get(0)).isEqualTo(expected);
     }
+
+    @Test
+    void returnsAllWordsInGameOverZone(){
+        Position positionInGameOverZone = new Position(0,gameField.getHeight()+1);
+        Position positionInGameZone = new Position(0,gameField.getHeight()-1);
+        Word wordInGameOverZone = new Word("word",positionInGameOverZone);
+        Word wordInGameZone = new Word("word",positionInGameZone);
+        gameField.addWord(wordInGameOverZone);
+        gameField.addWord(wordInGameZone);
+        List<Word> expected = List.of(wordInGameOverZone);
+
+        List<Word> actual = gameField.getWordsInGameOverZone();
+
+        assertThat(actual).isEqualTo(expected);
+    }
 }

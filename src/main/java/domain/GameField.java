@@ -39,4 +39,12 @@ public class GameField {
     public void moveWords(int stepSize) {
         words.forEach(word -> word.moveY(stepSize));
     }
+
+    public List<Word> getWordsInGameOverZone() {
+        return words.stream().filter(word -> wordInGameOverZone(word)).toList();
+    }
+
+    private boolean wordInGameOverZone(Word word) {
+        return word.getPosition().y() > height;
+    }
 }

@@ -1,7 +1,7 @@
 package domain;
 
 import adapter.out.ConsoleDisplay;
-import domain.port.out.WordRepositoryStub;
+import adapter.out.WordRepositoryStub;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

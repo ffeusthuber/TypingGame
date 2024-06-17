@@ -3,7 +3,10 @@
     [X] deduct playerLive when word is in zone
     [X] remove word from gameField
     [X] if word was targeted, drop target
-    [ ] if player reaches 0 lives game is stopped
+    [X] if player reaches 0 lives game is stopped
+    [ ] add gameOver screen
+    [ ] show score
+    [ ] show restart button
 [ ] set random moveStepSize for words
 [ ] add more words
 [ ] add game enhancements
@@ -11,3 +14,5 @@
     [ ] score
 [ ] make javaFx-application more beautiful
     [ ] word view
+    [ ] gameField
+    [ ] gameOver screen

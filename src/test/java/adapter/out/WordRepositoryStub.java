@@ -1,4 +1,6 @@
-package domain.port.out;
+package adapter.out;
+
+import domain.port.out.WordRepository;
 
 import java.util.ArrayList;
 import java.util.Arrays;

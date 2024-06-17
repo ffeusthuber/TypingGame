@@ -1,10 +1,11 @@
-package domain.port.in;
+package adapter.in;
 
 import domain.GameField;
 import domain.Word;
 import domain.WordTargeter;
+import domain.port.in.KeyPressListener;
 
-public class KeyPressHandler implements KeyPressListener{
+public class KeyPressHandler implements KeyPressListener {
     private final GameField gameField;
     private final WordTargeter wordTargeter;
 

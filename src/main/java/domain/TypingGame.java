@@ -1,6 +1,6 @@
 package domain;
 
-import domain.port.in.KeyPressHandler;
+import adapter.in.KeyPressHandler;
 import domain.port.in.KeyPressListener;
 import domain.port.out.DisplayPort;
 import domain.port.out.WordRepository;

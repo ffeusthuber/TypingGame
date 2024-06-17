@@ -1,6 +1,7 @@
-package domain.port.out;
+package adapter.out;
 
 import domain.Word;
+import domain.port.out.DisplayPort;
 
 import java.util.List;
 

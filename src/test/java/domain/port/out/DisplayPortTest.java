@@ -1,5 +1,6 @@
 package domain.port.out;
 
+import adapter.out.DisplayMock;
 import domain.Position;
 import domain.Word;
 import org.junit.jupiter.api.Test;

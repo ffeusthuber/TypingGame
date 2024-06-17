@@ -19,7 +19,7 @@ public class TypingGameTest {
     }
 
     @Test
-    void wordsAreMovedByTheCorrectStepSize() {
+    void wordsMoveDownByStepSizeWhenMoved() {
         TypingGame typingGame = initializeTypingGame();
         Word word = new Word("Apple", new Position(0, 0));
         GameField gameField = typingGame.getGameField();
@@ -60,6 +60,45 @@ public class TypingGameTest {
         typingGame.moveWords(10);
 
         assertThat(typingGame.getWordTargeter().hasTarget()).isEqualTo(false);
+    }
+
+    @Test
+    void whenGameIsStoppedGameFieldIsClearedAndTargetGetsDropped() {
+        TypingGame typingGame = initializeTypingGame(1);
+        GameField gameField = typingGame.getGameField();
+        WordTargeter wordTargeter = typingGame.getWordTargeter();
+        Word word = new Word("Apple",new Position(0,0));
+        gameField.addWord(word);
+        wordTargeter.targetByKey("A",gameField.getWords());
+
+        typingGame.stop();
+
+        assertThat(gameField.getWords()).isEmpty();
+        assertThat(wordTargeter.hasTarget()).isFalse();
+    }
+
+    @Test
+    void whenGameIsStoppedRunningTasksAreStopped() {
+        TypingGame typingGame = initializeTypingGame();
+
+        typingGame.start();
+        assertThat(typingGame.getTaskManager().tasksRunning()).isTrue();
+
+        typingGame.stop();
+        assertThat(typingGame.getTaskManager().tasksRunning()).isFalse();
+    }
+
+    @Test
+    void whenPlayerLivesReachZeroGameIsStopped() {
+        TypingGame typingGame = initializeTypingGame(1);
+        GameField gameField = typingGame.getGameField();
+        Word word = new Word("Apple",new Position(0,gameField.getHeight()-1));
+        gameField.addWord(word);
+
+        typingGame.start();
+        typingGame.moveWords(10);
+
+        assertThat(typingGame.getTaskManager().tasksRunning()).isFalse();
     }
 
     private TypingGame initializeTypingGame(){

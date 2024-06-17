@@ -47,4 +47,8 @@ public class GameField {
     private boolean wordInGameOverZone(Word word) {
         return word.getPosition().y() > height;
     }
+
+    public void clear() {
+        words.clear();
+    }
 }

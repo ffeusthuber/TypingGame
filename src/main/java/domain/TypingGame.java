@@ -11,7 +11,11 @@ public class TypingGame {
     private static final int DISPLAY_UPDATE_INTERVAL = 15;
     private static final int WORD_MOVE_INTERVAL = 15;
     private static final int WORD_MOVE_STEPSIZE = 1;
-    private static int wordSpawnInterval = 2000;
+    private static final int GAME_FIELD_HEIGHT = 400;
+    private static final List<Position> SPAWN_POINTS = List.of(new Position(50, 0),
+                                                               new Position(300, 0),
+                                                               new Position(550, 0));
+    private int wordSpawnInterval = 2000;
     private final WordTargeter wordTargeter;
 
 
@@ -25,22 +29,13 @@ public class TypingGame {
     public TypingGame(int initialPlayerLives, DisplayPort display, WordRepository wordRepository) {
         this.playerLives = initialPlayerLives;
         this.display = display;
-        this.gameField = createGameField();
+        this.gameField = new GameField(GAME_FIELD_HEIGHT, SPAWN_POINTS);
         this.wordSpawner = new WordSpawner(gameField,wordRepository);
         this.wordTargeter = new WordTargeter();
         this.keyPressListener = new KeyPressHandler(gameField, wordTargeter);
         this.taskManager = new TaskManager();
 
         setUpTimedTasks();
-    }
-
-    private GameField createGameField() {
-        int gameFieldHeight = 100;
-        List<Position> spawnPoints = List.of(new Position(50, 0),
-                                             new Position(300, 0),
-                                             new Position(550, 0));
-
-        return new GameField(gameFieldHeight,spawnPoints);
     }
 
     private void setUpTimedTasks() {
@@ -55,10 +50,16 @@ public class TypingGame {
 
     void moveWords(int stepSize) {
         gameField.moveWords(stepSize);
+        handleWordsInGameOverZone();
+    }
 
+    private void handleWordsInGameOverZone() {
         List<Word> wordsInGameOverZone = gameField.getWordsInGameOverZone();
         for (Word word : wordsInGameOverZone) {
             playerLives -= 1;
+            if(playerLives == 0){
+                stop();
+            }
             gameField.removeWord(word);
             if(wordTargeter.hasTarget() && wordTargeter.getTarget().equals(word)){
                 wordTargeter.dropTarget();
@@ -80,5 +81,15 @@ public class TypingGame {
 
     public WordTargeter getWordTargeter() {
         return this.wordTargeter;
+    }
+
+    public void stop() {
+        gameField.clear();
+        wordTargeter.dropTarget();
+        taskManager.stopRunningTasks();
+    }
+
+    public TaskManager getTaskManager() {
+        return this.taskManager;
     }
 }

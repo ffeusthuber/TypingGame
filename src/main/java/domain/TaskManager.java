@@ -32,6 +32,9 @@ public class TaskManager {
     }
 
     public void stopRunningTasks(){
+        for (ScheduledFuture<?> task : runningTasks.values()) {
+            task.cancel(true);
+        }
         scheduledExecutorService.shutdownNow();
         runningTasks.clear();
         tasksRunning = false;

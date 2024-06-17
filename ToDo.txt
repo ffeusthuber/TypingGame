@@ -3,6 +3,7 @@
     [X] deduct playerLive when word is in zone
     [X] remove word from gameField
     [X] if word was targeted, drop target
+    [ ] if player reaches 0 lives game is stopped
 [ ] set random moveStepSize for words
 [ ] add more words
 [ ] add game enhancements

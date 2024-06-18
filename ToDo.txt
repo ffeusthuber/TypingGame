@@ -13,6 +13,7 @@
     [ ] stopwatch
     [ ] score
 [ ] make javaFx-application more beautiful
+    [ ] start screen
     [ ] word view
     [ ] gameField
     [ ] gameOver screen

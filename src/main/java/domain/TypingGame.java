@@ -39,8 +39,8 @@ public class TypingGame {
     }
 
     private void setUpTimedTasks() {
-        taskManager.addTimedTasks(() -> wordSpawner.spawnOnRandomSpawnPoint(),wordSpawnInterval);
-        taskManager.addTimedTasks(() -> display.display(gameField.getWords()), DISPLAY_UPDATE_INTERVAL);
+        taskManager.addTimedTasks(() -> this.spawnWord(), wordSpawnInterval);
+        taskManager.addTimedTasks(() -> this.display(), DISPLAY_UPDATE_INTERVAL);
         taskManager.addTimedTasks(() -> this.moveWords(WORD_MOVE_STEPSIZE),WORD_MOVE_INTERVAL);
     }
 
@@ -48,9 +48,23 @@ public class TypingGame {
         taskManager.runTimedTasks();
     }
 
+    public void stop() {
+        gameField.clear();
+        wordTargeter.dropTarget();
+        taskManager.stopRunningTasks();
+    }
+
+    void spawnWord(){
+        wordSpawner.spawnOnRandomSpawnPoint();
+    }
+
     void moveWords(int stepSize) {
         gameField.moveWords(stepSize);
         handleWordsInGameOverZone();
+    }
+
+    void display() {
+        display.display(gameField.getWords());
     }
 
     private void handleWordsInGameOverZone() {
@@ -81,12 +95,6 @@ public class TypingGame {
 
     public WordTargeter getWordTargeter() {
         return this.wordTargeter;
-    }
-
-    public void stop() {
-        gameField.clear();
-        wordTargeter.dropTarget();
-        taskManager.stopRunningTasks();
     }
 
     public TaskManager getTaskManager() {

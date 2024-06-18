@@ -29,6 +29,7 @@ public class KeyPressHandlerTest {
         Word word = new Word("Apple");
         gameField.addWord(word);
 
+        assertThat(wordTargeter.hasTarget()).isFalse();
         keyPressHandler.onKeyPressed("A");
 
         assertThat(wordTargeter.getTarget()).isEqualTo(word);

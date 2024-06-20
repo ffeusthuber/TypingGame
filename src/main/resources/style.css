@@ -1,0 +1,10 @@
+body {
+    -fx-background-color: red;
+    -fx-padding: 10px;
+}
+
+.label {
+    -fx-text-fill: #2980b9;
+    -fx-font-weight: bold;
+}
+

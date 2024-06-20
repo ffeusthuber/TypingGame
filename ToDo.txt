@@ -7,11 +7,14 @@
     [ ] add gameOver screen
     [ ] show score
     [ ] show restart button
+[ ] rework timed tasks
 [ ] set random moveStepSize for words
 [ ] add more words
+[ ] change render method to be called when changes occur and not dependent on time
 [ ] add game enhancements
     [ ] stopwatch
     [ ] score
+    [ ] difficulty settings, that set lower intervals
 [ ] make javaFx-application more beautiful
     [ ] start screen
     [ ] word view

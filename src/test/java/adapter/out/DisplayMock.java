@@ -14,6 +14,11 @@ public class DisplayMock implements DisplayPort {
         this.displayedWords = words;
     }
 
+    @Override
+    public void gameOver() {
+
+    }
+
     public List<Word> getDisplayedWords() {
         return this.displayedWords;
     }

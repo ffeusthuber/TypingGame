@@ -12,4 +12,9 @@ public class ConsoleDisplay implements DisplayPort {
             System.out.println(word);
         }
     }
+
+    @Override
+    public void gameOver() {
+        System.out.println("GAME OVER");
+    }
 }

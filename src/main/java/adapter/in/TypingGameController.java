@@ -1,20 +1,21 @@
-package adapter.out;
+package adapter.in;
 
 import domain.TypingGame;
 import domain.Word;
 import domain.port.in.KeyPressListener;
 import domain.port.out.DisplayPort;
-import domain.port.out.WordRepository;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TypingGameController implements DisplayPort {
-    private KeyPressListener keyPressListener;
+    KeyPressListener keyPressListener;
     TypingGame typingGame;
 
     @FXML
@@ -22,12 +23,13 @@ public class TypingGameController implements DisplayPort {
 
     @FXML
     public void initialize() {
+        gameFieldView.setFocusTraversable(true);
+        gameFieldView.requestFocus();
         startTypingGame();
     }
 
-    private void startTypingGame() {
-        WordRepository wordRepository = new TextFileWordRepository("src/main/java/config/wordList.txt");
-        typingGame = new TypingGame(3, this, wordRepository);
+    public void startTypingGame() {
+        typingGame = new TypingGame(this);
         keyPressListener = typingGame.getKeyPressListener();
         typingGame.start();
     }
@@ -45,16 +47,24 @@ public class TypingGameController implements DisplayPort {
     public void display(List<Word> words) {
         Platform.runLater(() -> {
             gameFieldView.getChildren().clear();
-            for (Word word : words) {
-                Label wordLabel = new Label(word.getRemainingWord());
-                wordLabel.setLayoutX(word.getPosition().x());
-                wordLabel.setLayoutY(word.getPosition().y());
+            List<Word> wordsToDisplay = new ArrayList<>(words);
+            for (Word word : wordsToDisplay) {
+                Label wordLabel = createWordLabel(word);
                 gameFieldView.getChildren().add(wordLabel);
             }
         });
     }
 
-    public void setKeyPressListener(KeyPressListener keyPressListener) {
-        this.keyPressListener = keyPressListener;
+    private Label createWordLabel(Word word) {
+        Label wordLabel = new Label(word.getRemainingWord());
+        wordLabel.setLayoutX(word.getPosition().x());
+        wordLabel.setLayoutY(word.getPosition().y());
+        return wordLabel;
+    }
+
+    @Override
+    public void gameOver() {
+        Scene scene = gameFieldView.getScene();
+        ScreenController.getInstance(scene).activateGameOver();
     }
 }

@@ -1,37 +1,42 @@
 package application;
 
-import adapter.out.TypingGameController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class TypingGameApplication extends Application {
 
+    private static final Logger LOGGER = Logger.getLogger(TypingGameApplication.class.getName());
     @Override
-    public void start(Stage stage) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/TypingGame.fxml"));
-        Parent root = loader.load();
+    public void start(Stage primaryStage) {
+        Scene scene = createScene();
 
-        TypingGameController controller = loader.getController();
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("TypingGame");
+        primaryStage.show();
+    }
 
+    private Scene createScene() {
+        Pane root = loadFXML("/MainMenu.fxml");
         Scene scene = new Scene(root);
+        scene.getStylesheets().add("/style.css");
 
-        scene.getStylesheets().add("style.css");
-        scene.setOnKeyPressed(controller::handleKeyPressed);
+        return scene;
+    }
 
-        stage.setScene(scene);
-        stage.setTitle("TypingGame");
-
-        //set an icon
-        //Image icon = new Image("set image path here");
-        //stage.getIcons().add(icon);
-
-        stage.show();
+    private Pane loadFXML(String fxmlPath) {
+        try {
+            return FXMLLoader.load(getClass().getResource(fxmlPath));
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE,"Failed to load " + fxmlPath, e);
+            return null;
+        }
     }
 
     public static void main(String[] args) {

@@ -1,18 +1,12 @@
 package domain;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 public class TaskManager {
 
     private final ScheduledExecutorService scheduledExecutorService;
-    private final Map<Runnable,Integer> timedTasks = new HashMap<>();
-    private final Map<Runnable, ScheduledFuture<?>> runningTasks = new HashMap<>();
-    private boolean tasksRunning = false;
+    private final ConcurrentHashMap<Runnable,Integer> timedTasks = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<Runnable, ScheduledFuture<?>> runningTasks = new ConcurrentHashMap<>();
 
     public TaskManager(){
         scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
@@ -23,60 +17,52 @@ public class TaskManager {
     }
 
     public void runTimedTasks() {
-        tasksRunning = true;
-        for (Map.Entry<Runnable, Integer> entry : timedTasks.entrySet()) {
-            Runnable task = entry.getKey();
-            int rateInMs = entry.getValue();
-            runTask(task, rateInMs);
-        }
+        timedTasks.forEach((task, rateInMs) -> runTask(task, rateInMs, 0));
     }
 
     public void stopRunningTasks(){
-        for (ScheduledFuture<?> task : runningTasks.values()) {
-            task.cancel(true);
+        try {
+            runningTasks.values().forEach(task -> task.cancel(true));
+            scheduledExecutorService.shutdownNow();
+        } finally {
+            runningTasks.clear();
         }
-        scheduledExecutorService.shutdownNow();
-        runningTasks.clear();
-        tasksRunning = false;
     }
 
     public int getRateOfTimedTask(Runnable task) throws IllegalArgumentException{
-        checkValidity(task);
-
-        return timedTasks.get(task);
+        if(task != null && timedTasks.containsKey(task)){
+            return timedTasks.get(task);
+        }
+        throw new IllegalArgumentException("Task not found");
     }
 
     public void setRateForTimedTask(Runnable task, int rateInMs) {
-        checkValidity(task);
-
-        if (runningTasks.containsKey(task)) {
-            ScheduledFuture<?> scheduledTask = runningTasks.get(task);
-            scheduledTask.cancel(false);
-            runningTasks.remove(task);
-        }
-
-        timedTasks.put(task, rateInMs);
-        if (tasksRunning) {
-            runTask(task, rateInMs);
+        if (task != null && timedTasks.containsKey(task)) {
+            timedTasks.put(task, rateInMs);
+            if (tasksRunning()) {
+                cancelRunningTask(task);
+                runTask(task, rateInMs, rateInMs);
+            }
+        } else {
+            throw new IllegalArgumentException("Task not found");
         }
     }
 
-    private void runTask(Runnable task, int rateInMs) {
-        ScheduledFuture<?> scheduledTask = scheduledExecutorService.scheduleAtFixedRate(task, 0, rateInMs, TimeUnit.MILLISECONDS);
-        runningTasks.put(task, scheduledTask);
+    private void cancelRunningTask(Runnable task) {
+        runningTasks.get(task).cancel(false);
+        runningTasks.remove(task);
     }
 
-    private void checkValidity(Runnable task) {
-        if (task == null || !timedTasks.containsKey(task)) {
-            throw new IllegalArgumentException("No such task added");
+    private void runTask(Runnable task, int rateInMs, int initialDelay) {
+        try {
+            ScheduledFuture<?> scheduledTask = scheduledExecutorService.scheduleAtFixedRate(task, initialDelay, rateInMs, TimeUnit.MILLISECONDS);
+            runningTasks.put(task, scheduledTask);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     public boolean tasksRunning() {
-        return tasksRunning;
-    }
-
-    public Map<Runnable, ScheduledFuture<?>> getRunningTasks() {
-        return this.runningTasks;
+        return !runningTasks.isEmpty();
     }
 }

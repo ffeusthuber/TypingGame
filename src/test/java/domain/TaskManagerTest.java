@@ -37,6 +37,7 @@ public class TaskManagerTest {
 
     @Test
     void tasksRunningReflectsIfTasksAreRunning() {
+        taskManager.addTimedTasks(new TimedGameTaskMock(), 20);
         assertThat(taskManager.tasksRunning()).isFalse();
 
         taskManager.runTimedTasks();
@@ -65,19 +66,19 @@ public class TaskManagerTest {
 
         assertThatThrownBy(() -> taskManager.getRateOfTimedTask(timedGameTaskMock))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("No such task added");
+                .hasMessageContaining("Task not found");
 
         assertThatThrownBy(() -> taskManager.getRateOfTimedTask(null))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("No such task added");
+                .hasMessageContaining("Task not found");
 
         assertThatThrownBy(() -> taskManager.setRateForTimedTask(timedGameTaskMock, 1))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("No such task added");
+                .hasMessageContaining("Task not found");
 
         assertThatThrownBy(() -> taskManager.setRateForTimedTask(null, 1))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("No such task added");
+                .hasMessageContaining("Task not found");
     }
 
     @Test
@@ -109,7 +110,7 @@ public class TaskManagerTest {
 
         taskManager.stopRunningTasks();
 
-        assertThat(taskManager.getRunningTasks().size()).isEqualTo(0);
         assertThat(taskManager.tasksRunning()).isFalse();
     }
+
 }

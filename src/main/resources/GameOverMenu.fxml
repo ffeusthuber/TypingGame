@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="adapter.in.GameOverMenuController"
+            prefHeight="400.0" prefWidth="600.0">
+    <VBox>
+       <Text>GAME OVER</Text>
+        <Button text="Restart Game" onAction="#handleRestartButton"/>
+        <Button text="Exit" onAction="#handleExitButton"/>
+    </VBox>
+</AnchorPane>

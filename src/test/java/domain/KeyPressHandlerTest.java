@@ -1,6 +1,5 @@
 package domain;
 
-import adapter.in.KeyPressHandler;
 import domain.port.in.KeyPressListener;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

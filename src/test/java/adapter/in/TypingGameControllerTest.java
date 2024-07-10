@@ -1,10 +1,11 @@
-package adapter.out;
+package adapter.in;
 
 import domain.Position;
 import domain.TypingGame;
 import domain.Word;
 import domain.port.in.KeyPressListener;
 import javafx.embed.swing.JFXPanel;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
@@ -18,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 public class TypingGameControllerTest {
-    private TypingGameController controller;
+    private TypingGameController typingGameController;
 
     @BeforeAll
     public static void initJFX() {
@@ -26,9 +27,11 @@ public class TypingGameControllerTest {
     }
     @BeforeEach
     public void setUp() {
-        controller = new TypingGameController();
+        typingGameController = new TypingGameController();
+        Pane mockGameFieldView = mock(Pane.class);
+        typingGameController.gameFieldView = mockGameFieldView;
         TypingGame typingGame = mock(TypingGame.class);
-        controller.typingGame = typingGame;
+        typingGameController.typingGame = typingGame;
     }
 
     @Test
@@ -36,24 +39,35 @@ public class TypingGameControllerTest {
         KeyEvent keyEvent = mock(KeyEvent.class);
         when(keyEvent.getCode()).thenReturn(KeyCode.A);
         when(keyEvent.getText()).thenReturn("a");
-
         KeyPressListener keyPressListener = mock(KeyPressListener.class);
-        controller.setKeyPressListener(keyPressListener);
+        typingGameController.keyPressListener = keyPressListener;
 
-        controller.handleKeyPressed(keyEvent);
+        typingGameController.handleKeyPressed(keyEvent);
 
         verify(keyPressListener, times(1)).onKeyPressed("a");
     }
 
     @Test
-    public void displayedWordsGetAreAddedAsGameFieldChildren() throws InterruptedException {
+    public void displayedWordsGetAreAddedToGameFieldAsLabels() throws InterruptedException {
         Word word1 = new Word("word1", new Position(10, 10));
         Word word2 = new Word("word2", new Position(20, 20));
-        controller.gameFieldView = new Pane();
+        Pane gameFieldView = new Pane();
+        typingGameController.gameFieldView = gameFieldView;
 
-        controller.display(Arrays.asList(word1, word2));
-        Thread.sleep(75);
+        typingGameController.display(Arrays.asList(word1, word2));
+        Thread.sleep(500);
 
-        assertThat(controller.gameFieldView.getChildren()).hasSize(2);
+        assertThat(gameFieldView.getChildren()).hasSize(2);
+        assertThat(gameFieldView.getChildren().get(0)).isInstanceOf(Label.class);
+    }
+
+    @Test
+    void screenControllerActivatesGameOverScreenOnGameOver() {
+        ScreenController mockScreenController = mock(ScreenController.class);
+        ScreenController.setInstance(mockScreenController);
+
+        typingGameController.gameOver();
+
+        verify(mockScreenController).activateGameOver();
     }
 }

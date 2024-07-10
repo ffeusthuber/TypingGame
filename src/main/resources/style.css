@@ -1,10 +1,29 @@
 body {
-    -fx-background-color: red;
-    -fx-padding: 10px;
+    -fx-background: red;
+
 }
 
-.label {
-    -fx-text-fill: #2980b9;
-    -fx-font-weight: bold;
+Label{
+-fx-font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+    -fx-border-color: black;
+    -fx-border-width: 1px;
+    -fx-padding: 5px;
+    -fx-text-fill: black;
 }
+
+VBox{
+    -fx-spacing: 10px;
+    -fx-alignment: center;
+}
+
+Button{
+    -fx-font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+    -fx-background-color: #f4f4f4;
+    -fx-border-color: black;
+    -fx-border-width: 1px;
+    -fx-padding: 5px;
+    -fx-text-fill: black;
+}
+
+
 

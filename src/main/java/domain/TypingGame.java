@@ -1,6 +1,6 @@
 package domain;
 
-import adapter.in.KeyPressHandler;
+import adapter.out.TextFileWordRepository;
 import domain.port.in.KeyPressListener;
 import domain.port.out.DisplayPort;
 import domain.port.out.WordRepository;
@@ -8,13 +8,14 @@ import domain.port.out.WordRepository;
 import java.util.List;
 
 public class TypingGame {
+    private static final int INITIAL_PLAYER_LIVES = 3;
     private static final int DISPLAY_UPDATE_INTERVAL = 15;
     private static final int WORD_MOVE_INTERVAL = 15;
     private static final int WORD_MOVE_STEPSIZE = 1;
     private static final int GAME_FIELD_HEIGHT = 400;
-    private static final List<Position> SPAWN_POINTS = List.of(new Position(50, 0),
-                                                               new Position(300, 0),
-                                                               new Position(550, 0));
+    private static final List<Position> SPAWN_POINTS = List.of(new Position(50, -20),
+                                                               new Position(300, -20),
+                                                               new Position(550, -20));
     private int wordSpawnInterval = 2000;
     private final WordTargeter wordTargeter;
 
@@ -25,6 +26,12 @@ public class TypingGame {
     private final KeyPressListener keyPressListener;
     private final TaskManager taskManager;
     private final GameField gameField;
+
+    public TypingGame(DisplayPort display) {
+        this(INITIAL_PLAYER_LIVES,
+             display,
+             new TextFileWordRepository("src/main/java/config/wordList.txt"));
+    }
 
     public TypingGame(int initialPlayerLives, DisplayPort display, WordRepository wordRepository) {
         this.playerLives = initialPlayerLives;
@@ -42,6 +49,7 @@ public class TypingGame {
         taskManager.addTimedTasks(() -> this.spawnWord(), wordSpawnInterval);
         taskManager.addTimedTasks(() -> this.display(), DISPLAY_UPDATE_INTERVAL);
         taskManager.addTimedTasks(() -> this.moveWords(WORD_MOVE_STEPSIZE),WORD_MOVE_INTERVAL);
+        //addtimedtask (decrease wordspawnInterval)
     }
 
     public void start() {
@@ -52,6 +60,7 @@ public class TypingGame {
         gameField.clear();
         wordTargeter.dropTarget();
         taskManager.stopRunningTasks();
+        display.gameOver();
     }
 
     void spawnWord(){

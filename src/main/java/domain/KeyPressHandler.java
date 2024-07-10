@@ -1,8 +1,5 @@
-package adapter.in;
+package domain;
 
-import domain.GameField;
-import domain.Word;
-import domain.WordTargeter;
 import domain.port.in.KeyPressListener;
 
 public class KeyPressHandler implements KeyPressListener {
@@ -23,7 +20,6 @@ public class KeyPressHandler implements KeyPressListener {
         if(wordTargeter.hasTarget()){
             processKeyForTargetedWord(key);
         }
-
     }
 
     private void processKeyForTargetedWord(String key) {

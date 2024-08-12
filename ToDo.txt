@@ -4,12 +4,12 @@
     [X] remove word from gameField
     [X] if word was targeted, drop target
     [X] if player reaches 0 lives game is stopped
-    [ ] add gameOver screen
+    [X] add gameOver screen
     [ ] show score
     [ ] show restart button
 [ ] rework timed tasks
 [ ] set random moveStepSize for words
-[ ] add more words
+[X] add more words
 [ ] change render method to be called when changes occur and not dependent on time
 [ ] add game enhancements
     [ ] stopwatch

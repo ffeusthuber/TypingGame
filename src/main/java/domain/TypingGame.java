@@ -8,24 +8,33 @@ import domain.port.out.WordRepository;
 import java.util.List;
 
 public class TypingGame {
+    // Constants
     private static final int INITIAL_PLAYER_LIVES = 3;
     private static final int DISPLAY_UPDATE_INTERVAL = 15;
-    private static final int WORD_MOVE_INTERVAL = 15;
+    private static final int WORD_MOVE_INTERVAL = 20;
     private static final int WORD_MOVE_STEPSIZE = 1;
+    private static final int WORD_SPAWN_SPEED_UP_INTERVAL = 10000;
+    private static final int MIN_WORD_SPAWN_INTERVAL = 500;
     private static final int GAME_FIELD_HEIGHT = 400;
-    private static final List<Position> SPAWN_POINTS = List.of(new Position(50, -20),
-                                                               new Position(300, -20),
-                                                               new Position(550, -20));
-    private int wordSpawnInterval = 2000;
+    private static final List<Position> SPAWN_POINTS = List.of(
+            new Position(50, -20),
+            new Position(200, -20),
+            new Position(350, -20)
+    );
+
+    // Game components
     private final WordTargeter wordTargeter;
-
-
-    private int playerLives;
     private final DisplayPort display;
     private final WordSpawner wordSpawner;
     private final KeyPressListener keyPressListener;
     private final TaskManager taskManager;
     private final GameField gameField;
+    private final Runnable wordSpawnTask;
+
+    //Game state
+    private int wordSpawnInterval = 2000;
+    private int playerLives;
+
 
     public TypingGame(DisplayPort display) {
         this(INITIAL_PLAYER_LIVES,
@@ -41,15 +50,20 @@ public class TypingGame {
         this.wordTargeter = new WordTargeter();
         this.keyPressListener = new KeyPressHandler(gameField, wordTargeter);
         this.taskManager = new TaskManager();
+        wordSpawnTask = this::spawnWord;
 
         setUpTimedTasks();
     }
 
     private void setUpTimedTasks() {
-        taskManager.addTimedTasks(() -> this.spawnWord(), wordSpawnInterval);
+        taskManager.addTimedTasks(wordSpawnTask, wordSpawnInterval);
         taskManager.addTimedTasks(() -> this.display(), DISPLAY_UPDATE_INTERVAL);
         taskManager.addTimedTasks(() -> this.moveWords(WORD_MOVE_STEPSIZE),WORD_MOVE_INTERVAL);
-        //addtimedtask (decrease wordspawnInterval)
+        taskManager.addTimedTasks(() -> this.speedUpWordSpawning(this.taskManager), WORD_SPAWN_SPEED_UP_INTERVAL);
+    }
+
+    private void speedUpWordSpawning(TaskManager taskManager){
+        taskManager.setRateForTimedTask(wordSpawnTask, decreaseWordSpawnInterval(100));
     }
 
     public void start() {
@@ -80,7 +94,7 @@ public class TypingGame {
         List<Word> wordsInGameOverZone = gameField.getWordsInGameOverZone();
         for (Word word : wordsInGameOverZone) {
             playerLives -= 1;
-            if(playerLives == 0){
+            if(playerLives <= 0){
                 stop();
             }
             gameField.removeWord(word);
@@ -108,5 +122,10 @@ public class TypingGame {
 
     public TaskManager getTaskManager() {
         return this.taskManager;
+    }
+
+    private int decreaseWordSpawnInterval(int decreaseValue) {
+        wordSpawnInterval = Math.max(wordSpawnInterval - decreaseValue, MIN_WORD_SPAWN_INTERVAL);
+        return wordSpawnInterval;
     }
 }

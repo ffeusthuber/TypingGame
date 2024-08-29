@@ -24,7 +24,12 @@ public class MainMenuController {
         return (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
     }
 
+    public void handleHowToPlayButton(ActionEvent actionEvent) {
+    }
+
     private Scene getSceneFromEvent(ActionEvent actionEvent) {
         return getStageFromEvent(actionEvent).getScene();
     }
+
+
 }

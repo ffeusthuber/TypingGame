@@ -8,6 +8,7 @@ import domain.port.out.WordRepository;
 import java.util.List;
 
 public class TypingGame {
+
     // Constants
     private static final int INITIAL_PLAYER_LIVES = 3;
     private static final int DISPLAY_UPDATE_INTERVAL = 15;

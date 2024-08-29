@@ -2,6 +2,7 @@ package adapter.in;
 
 import domain.TypingGame;
 import domain.Word;
+import domain.WordTargeter;
 import domain.port.in.KeyPressListener;
 import domain.port.out.DisplayPort;
 import javafx.application.Platform;
@@ -23,9 +24,13 @@ public class TypingGameController implements DisplayPort {
 
     @FXML
     public void initialize() {
+        initializeGameFieldView();
+        startTypingGame();
+    }
+
+    private void initializeGameFieldView() {
         gameFieldView.setFocusTraversable(true);
         gameFieldView.requestFocus();
-        startTypingGame();
     }
 
     public void startTypingGame() {
@@ -50,6 +55,7 @@ public class TypingGameController implements DisplayPort {
             List<Word> wordsToDisplay = new ArrayList<>(words);
             for (Word word : wordsToDisplay) {
                 Label wordLabel = createWordLabel(word);
+                changeStyleOfTargetedWord(wordLabel, word);
                 gameFieldView.getChildren().add(wordLabel);
             }
         });
@@ -60,6 +66,14 @@ public class TypingGameController implements DisplayPort {
         wordLabel.setLayoutX(word.getPosition().x());
         wordLabel.setLayoutY(word.getPosition().y());
         return wordLabel;
+    }
+
+    void changeStyleOfTargetedWord(Label wordLabel, Word word) {
+        WordTargeter wordTargeter = typingGame.getWordTargeter();
+        wordLabel.getStyleClass().removeAll("targeted-word");
+        if (wordTargeter != null && wordTargeter.hasTarget() && wordTargeter.getTarget().equals(word)) {
+            wordLabel.getStyleClass().add("targeted-word");
+        }
     }
 
     @Override

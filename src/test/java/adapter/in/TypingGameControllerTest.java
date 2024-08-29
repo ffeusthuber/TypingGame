@@ -3,6 +3,7 @@ package adapter.in;
 import domain.Position;
 import domain.TypingGame;
 import domain.Word;
+import domain.WordTargeter;
 import domain.port.in.KeyPressListener;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.control.Label;
@@ -20,6 +21,7 @@ import static org.mockito.Mockito.*;
 
 public class TypingGameControllerTest {
     private TypingGameController typingGameController;
+    private WordTargeter mockWordTargeter;
 
     @BeforeAll
     public static void initJFX() {
@@ -28,10 +30,9 @@ public class TypingGameControllerTest {
     @BeforeEach
     public void setUp() {
         typingGameController = new TypingGameController();
-        Pane mockGameFieldView = mock(Pane.class);
-        typingGameController.gameFieldView = mockGameFieldView;
-        TypingGame typingGame = mock(TypingGame.class);
-        typingGameController.typingGame = typingGame;
+        typingGameController.gameFieldView = mock(Pane.class);
+        typingGameController.typingGame = mock(TypingGame.class);
+        mockWordTargeter = mock(WordTargeter.class);
     }
 
     @Test
@@ -69,5 +70,33 @@ public class TypingGameControllerTest {
         typingGameController.gameOver();
 
         verify(mockScreenController).activateGameOver();
+    }
+
+    @Test
+    public void styleOfTargetedWordGetsChanged() {
+        Word word = new Word("target", new Position(10, 10));
+        Label wordLabel = new Label(word.getRemainingWord());
+
+        when(typingGameController.typingGame.getWordTargeter()).thenReturn(mockWordTargeter);
+        when(mockWordTargeter.hasTarget()).thenReturn(true);
+        when(mockWordTargeter.getTarget()).thenReturn(word);
+
+        typingGameController.changeStyleOfTargetedWord(wordLabel, word);
+
+        assertThat(wordLabel.getStyleClass()).contains("targeted-word");
+    }
+
+    @Test
+    public void styleOfNotTargetedWordDoesNotGetChanged() {
+        Word word = new Word("notTarget", new Position(10, 10));
+        Label wordLabel = new Label(word.getRemainingWord());
+
+        when(typingGameController.typingGame.getWordTargeter()).thenReturn(mockWordTargeter);
+        when(mockWordTargeter.hasTarget()).thenReturn(true);
+        when(mockWordTargeter.getTarget()).thenReturn(new Word("otherWord", new Position(0, 0)));
+
+        typingGameController.changeStyleOfTargetedWord(wordLabel, word);
+
+        assertThat(wordLabel.getStyleClass()).doesNotContain("targeted-word");
     }
 }

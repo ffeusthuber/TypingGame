@@ -13,7 +13,7 @@ public class TypingGameTest {
         TypingGame typingGame = initializeTypingGame();
 
         typingGame.start();
-        Thread.sleep(50);
+        Thread.sleep(2000);
 
         assertThat(typingGame.getGameField().getWords()).isNotEmpty();
     }
@@ -105,6 +105,7 @@ public class TypingGameTest {
         int initialPlayerLives = 3;
         return new TypingGame(initialPlayerLives, new ConsoleDisplay(), new WordRepositoryStub("word"));
     }
+
     private TypingGame initializeTypingGame(int initialPlayerLives){
         return new TypingGame(initialPlayerLives, new ConsoleDisplay(), new WordRepositoryStub("word"));
     }

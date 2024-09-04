@@ -4,7 +4,9 @@ import adapter.out.TextFileWordRepository;
 import domain.port.in.KeyPressListener;
 import domain.port.out.DisplayPort;
 import domain.port.out.WordRepository;
+import util.Stopwatch;
 
+import java.time.Clock;
 import java.util.List;
 
 public class TypingGame {
@@ -31,6 +33,7 @@ public class TypingGame {
     private final TaskManager taskManager;
     private final GameField gameField;
     private final Runnable wordSpawnTask;
+    private final Stopwatch stopwatch;
 
     //Game state
     private int wordSpawnInterval = 2000;
@@ -52,6 +55,7 @@ public class TypingGame {
         this.keyPressListener = new KeyPressHandler(gameField, wordTargeter);
         this.taskManager = new TaskManager();
         wordSpawnTask = this::spawnWord;
+        this.stopwatch = new Stopwatch(Clock.systemDefaultZone());
 
         setUpTimedTasks();
     }
@@ -69,9 +73,11 @@ public class TypingGame {
 
     public void start() {
         taskManager.runTimedTasks();
+        stopwatch.start();
     }
 
     public void stop() {
+        stopwatch.stop();
         gameField.clear();
         wordTargeter.dropTarget();
         taskManager.stopRunningTasks();
@@ -129,5 +135,9 @@ public class TypingGame {
     private int decreaseWordSpawnInterval(int decreaseValue) {
         wordSpawnInterval = Math.max(wordSpawnInterval - decreaseValue, MIN_WORD_SPAWN_INTERVAL);
         return wordSpawnInterval;
+    }
+
+    public Stopwatch getStopwatch() {
+        return this.stopwatch;
     }
 }

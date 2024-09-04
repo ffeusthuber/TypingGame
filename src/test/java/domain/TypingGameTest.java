@@ -6,6 +6,7 @@ import adapter.out.WordRepositoryStub;
 import domain.port.out.DisplayPort;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import util.Stopwatch;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -91,6 +92,7 @@ public class TypingGameTest {
         Word word = new Word("Apple",new Position(0,0));
         gameField.addWord(word);
         wordTargeter.targetByKey("A",gameField.getWords());
+        typingGame.start();
 
         typingGame.stop();
 
@@ -106,6 +108,17 @@ public class TypingGameTest {
         typingGame.stop();
         assertThat(typingGame.getTaskManager().tasksRunning()).isFalse();
     }
+
+    @Test
+    void stopWatchIsStartedAndStoppedWithTypingGame() {
+        typingGame.start();
+        Stopwatch stopwatch = typingGame.getStopwatch();
+        assertThat(stopwatch.isRunning()).isTrue();
+
+        typingGame.stop();
+        assertThat(stopwatch.isRunning()).isFalse();
+    }
+
 
     @Test
     void whenPlayerLivesReachZeroGameIsStopped() {

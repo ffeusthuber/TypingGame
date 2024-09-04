@@ -32,4 +32,8 @@ public class Stopwatch {
         }
         return this.elapsedTime;
     }
+
+    public boolean isRunning() {
+        return isRunning;
+    }
 }

@@ -43,7 +43,7 @@ public class TypingGame {
     public TypingGame(DisplayPort display) {
         this(INITIAL_PLAYER_LIVES,
              display,
-             new TextFileWordRepository("src/main/java/config/wordList.txt"));
+             new TextFileWordRepository("src/main/resources/wordList.txt"));
     }
 
     public TypingGame(int initialPlayerLives, DisplayPort display, WordRepository wordRepository) {

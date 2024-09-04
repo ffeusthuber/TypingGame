@@ -11,7 +11,7 @@ public class TextFileWordRepositoryTest {
 
     @Test
     void getAllReturnsAllStringsFromTxtFile(){
-        WordRepository textFileWordRepository = new TextFileWordRepository("src/test/java/config/testWordList.txt");
+        WordRepository textFileWordRepository = new TextFileWordRepository("src/test/resources/testWordList.txt");
 
         List<String> expected = List.of("Apple", "Banana", "Orange");
         List<String> actual = textFileWordRepository.getAll();

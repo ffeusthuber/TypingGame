@@ -1,18 +1,32 @@
 package domain;
 
 import adapter.out.ConsoleDisplay;
+import adapter.out.DisplayMock;
 import adapter.out.WordRepositoryStub;
+import domain.port.out.DisplayPort;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TypingGameTest {
 
+    private static final int INITIAL_PLAYER_LIVES = 3;
+    private static final int STEP_SIZE = 10;
+
+    private TypingGame typingGame;
+    private GameField gameField;
+
+    @BeforeEach
+    void setUp() {
+        typingGame = initializeTypingGame();
+        gameField = typingGame.getGameField();
+    }
+
     @Test
     void whenGameIsStartedWordsGetSpawnedOnGameField() throws InterruptedException {
-        TypingGame typingGame = initializeTypingGame();
-
         typingGame.start();
+
         Thread.sleep(2000);
 
         assertThat(typingGame.getGameField().getWords()).isNotEmpty();
@@ -20,9 +34,7 @@ public class TypingGameTest {
 
     @Test
     void wordsMoveDownByStepSizeWhenMoved() {
-        TypingGame typingGame = initializeTypingGame();
         Word word = new Word("Apple", new Position(0, 0));
-        GameField gameField = typingGame.getGameField();
         gameField.addWord(word);
         int stepSize = 10;
 
@@ -34,17 +46,27 @@ public class TypingGameTest {
 
     @Test
     void playerLosesLifeAndWordIsRemovedWhenWordReachesGameOverZone() {
-        int initialPlayerLives = 3;
-        TypingGame typingGame = initializeTypingGame(initialPlayerLives);
-        GameField gameField = typingGame.getGameField();
-        int gameFieldHeight = gameField.getHeight();
-        Word word = new Word("Apple",new Position(0,gameFieldHeight-1));
+        Word word = new Word("Apple", new Position(0, gameField.getHeight() -1));
         gameField.addWord(word);
 
-        typingGame.moveWords(10);
+        typingGame.moveWords(STEP_SIZE);
 
-        assertThat(typingGame.getPlayerLives()).isEqualTo(2);
+        assertThat(typingGame.getPlayerLives()).isEqualTo(INITIAL_PLAYER_LIVES - 1);
         assertThat(gameField.getWords()).isEmpty();
+    }
+
+
+    @Test
+    void whenPlayerLoosesLifeUpdateLivesIsCalled() {
+        DisplayMock displayMock = new DisplayMock();
+        TypingGame typingGame = initializeTypingGame(displayMock);
+        GameField gameField = typingGame.getGameField();
+        Word word = new Word("Apple",new Position(0, gameField.getHeight() -1));
+        gameField.addWord(word);
+
+        typingGame.moveWords(STEP_SIZE);
+
+        assertThat(displayMock.isUpdateLivesCalled()).isTrue();
     }
 
     @Test
@@ -64,7 +86,6 @@ public class TypingGameTest {
 
     @Test
     void whenGameIsStoppedGameFieldIsClearedAndTargetGetsDropped() {
-        TypingGame typingGame = initializeTypingGame(1);
         GameField gameField = typingGame.getGameField();
         WordTargeter wordTargeter = typingGame.getWordTargeter();
         Word word = new Word("Apple",new Position(0,0));
@@ -79,8 +100,6 @@ public class TypingGameTest {
 
     @Test
     void whenGameIsStoppedRunningTasksAreStopped() {
-        TypingGame typingGame = initializeTypingGame();
-
         typingGame.start();
         assertThat(typingGame.getTaskManager().tasksRunning()).isTrue();
 
@@ -90,7 +109,7 @@ public class TypingGameTest {
 
     @Test
     void whenPlayerLivesReachZeroGameIsStopped() {
-        TypingGame typingGame = initializeTypingGame(1);
+        TypingGame typingGame = initializeTypingGameWith1Live();
         GameField gameField = typingGame.getGameField();
         Word word = new Word("Apple",new Position(0,gameField.getHeight()-1));
         gameField.addWord(word);
@@ -102,12 +121,15 @@ public class TypingGameTest {
     }
 
     private TypingGame initializeTypingGame(){
-        int initialPlayerLives = 3;
-        return new TypingGame(initialPlayerLives, new ConsoleDisplay(), new WordRepositoryStub("word"));
+        return new TypingGame(INITIAL_PLAYER_LIVES, new ConsoleDisplay(), new WordRepositoryStub("word"));
     }
 
-    private TypingGame initializeTypingGame(int initialPlayerLives){
-        return new TypingGame(initialPlayerLives, new ConsoleDisplay(), new WordRepositoryStub("word"));
+    private TypingGame initializeTypingGameWith1Live(){
+        return new TypingGame(1, new ConsoleDisplay(), new WordRepositoryStub("word"));
+    }
+
+    private TypingGame initializeTypingGame(DisplayPort displayPort){
+        return new TypingGame(INITIAL_PLAYER_LIVES,displayPort, new WordRepositoryStub("word"));
     }
 
 }

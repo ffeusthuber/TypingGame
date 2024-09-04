@@ -81,7 +81,7 @@ public class TypingGameControllerTest {
         when(mockWordTargeter.hasTarget()).thenReturn(true);
         when(mockWordTargeter.getTarget()).thenReturn(word);
 
-        typingGameController.changeStyleOfTargetedWord(wordLabel, word);
+        typingGameController.styleTargetedWord(wordLabel, word);
 
         assertThat(wordLabel.getStyleClass()).contains("targeted-word");
     }
@@ -95,8 +95,20 @@ public class TypingGameControllerTest {
         when(mockWordTargeter.hasTarget()).thenReturn(true);
         when(mockWordTargeter.getTarget()).thenReturn(new Word("otherWord", new Position(0, 0)));
 
-        typingGameController.changeStyleOfTargetedWord(wordLabel, word);
+        typingGameController.styleTargetedWord(wordLabel, word);
 
         assertThat(wordLabel.getStyleClass()).doesNotContain("targeted-word");
+    }
+
+    @Test
+    public void remainingLivesAreDisplayed() throws InterruptedException {
+        Pane remainingLivesView = new Pane();
+        typingGameController.remainingLivesView = remainingLivesView;
+        when(typingGameController.typingGame.getPlayerLives()).thenReturn(3);
+
+        typingGameController.updateLives();
+        Thread.sleep(500);
+
+        assertThat(remainingLivesView.getChildren()).hasSize(3);
     }
 }

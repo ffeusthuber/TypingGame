@@ -16,7 +16,7 @@ public class TypingGame {
     private static final int WORD_MOVE_STEPSIZE = 1;
     private static final int WORD_SPAWN_SPEED_UP_INTERVAL = 10000;
     private static final int MIN_WORD_SPAWN_INTERVAL = 500;
-    private static final int GAME_FIELD_HEIGHT = 400;
+    private static final int GAME_FIELD_HEIGHT = 500;
     private static final List<Position> SPAWN_POINTS = List.of(
             new Position(50, -20),
             new Position(200, -20),
@@ -95,6 +95,7 @@ public class TypingGame {
         List<Word> wordsInGameOverZone = gameField.getWordsInGameOverZone();
         for (Word word : wordsInGameOverZone) {
             playerLives -= 1;
+            display.updateLives();
             if(playerLives <= 0){
                 stop();
             }

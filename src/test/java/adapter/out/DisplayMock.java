@@ -7,6 +7,8 @@ import java.util.List;
 
 public class DisplayMock implements DisplayPort {
 
+    boolean updateLivesCalled = false;
+
     private List<Word> displayedWords;
 
     @Override
@@ -16,10 +18,20 @@ public class DisplayMock implements DisplayPort {
 
     @Override
     public void gameOver() {
+        System.out.println("GAME OVER");
+    }
 
+    @Override
+    public void updateLives() {
+        updateLivesCalled = true;
+        System.out.println("Lives updated");
     }
 
     public List<Word> getDisplayedWords() {
         return this.displayedWords;
+    }
+
+    public boolean isUpdateLivesCalled() {
+        return updateLivesCalled;
     }
 }

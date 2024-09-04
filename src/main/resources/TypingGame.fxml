@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="adapter.in.TypingGameController"
-            prefHeight="500.0" prefWidth="600.0">
-    <Pane fx:id="gameFieldView" onKeyPressed="#handleKeyPressed">
 
-    </Pane>
-
+<AnchorPane prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="adapter.in.TypingGameController">
+    <Pane fx:id="gameFieldView" onKeyPressed="#handleKeyPressed"> </Pane>
+    <Pane fx:id="remainingLivesView" layoutX="50.0" layoutY="587.0"> </Pane>
 </AnchorPane>

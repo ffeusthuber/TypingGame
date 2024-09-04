@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,8 @@ public class TypingGameController implements DisplayPort {
 
     @FXML
     Pane gameFieldView;
+    @FXML
+    Pane remainingLivesView;
 
     @FXML
     public void initialize() {
@@ -37,6 +40,7 @@ public class TypingGameController implements DisplayPort {
         typingGame = new TypingGame(this);
         keyPressListener = typingGame.getKeyPressListener();
         typingGame.start();
+        updateLives();
     }
 
     @FXML
@@ -55,7 +59,7 @@ public class TypingGameController implements DisplayPort {
             List<Word> wordsToDisplay = new ArrayList<>(words);
             for (Word word : wordsToDisplay) {
                 Label wordLabel = createWordLabel(word);
-                changeStyleOfTargetedWord(wordLabel, word);
+                styleTargetedWord(wordLabel, word);
                 gameFieldView.getChildren().add(wordLabel);
             }
         });
@@ -68,7 +72,7 @@ public class TypingGameController implements DisplayPort {
         return wordLabel;
     }
 
-    void changeStyleOfTargetedWord(Label wordLabel, Word word) {
+    void styleTargetedWord(Label wordLabel, Word word) {
         WordTargeter wordTargeter = typingGame.getWordTargeter();
         wordLabel.getStyleClass().removeAll("targeted-word");
         if (wordTargeter != null && wordTargeter.hasTarget() && wordTargeter.getTarget().equals(word)) {
@@ -80,5 +84,24 @@ public class TypingGameController implements DisplayPort {
     public void gameOver() {
         Scene scene = gameFieldView.getScene();
         ScreenController.getInstance(scene).activateGameOver();
+    }
+
+    private Text createLifeIcon(int index) {
+        Text lifeIcon = new Text("❤");
+        lifeIcon.getStyleClass().add("life-icon");
+        lifeIcon.setLayoutX(index * 20);
+        return lifeIcon;
+    }
+
+    @Override
+    public void updateLives() {
+        Platform.runLater(() -> {
+            remainingLivesView.getChildren().clear();
+            int playerLives = typingGame.getPlayerLives();
+            if (playerLives <= 0) return;
+            for (int i = 0; i < playerLives; i++) {
+                remainingLivesView.getChildren().add(createLifeIcon(i));
+            }
+        });
     }
 }

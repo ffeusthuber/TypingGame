@@ -17,4 +17,9 @@ public class ConsoleDisplay implements DisplayPort {
     public void gameOver() {
         System.out.println("GAME OVER");
     }
+
+    @Override
+    public void updateLives() {
+        System.out.println("Lives updated");
+    }
 }

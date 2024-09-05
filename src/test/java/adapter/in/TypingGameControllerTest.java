@@ -10,10 +10,13 @@ import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.Duration;
+import java.time.temporal.TemporalAmount;
 import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,8 +30,9 @@ public class TypingGameControllerTest {
     public static void initJFX() {
         new JFXPanel();
     }
+
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         typingGameController = new TypingGameController();
         typingGameController.gameFieldView = mock(Pane.class);
         typingGameController.typingGame = mock(TypingGame.class);
@@ -36,7 +40,7 @@ public class TypingGameControllerTest {
     }
 
     @Test
-    public void keyPressGetsPassedToKeyPressListener() {
+    void keyPressGetsPassedToKeyPressListener() {
         KeyEvent keyEvent = mock(KeyEvent.class);
         when(keyEvent.getCode()).thenReturn(KeyCode.A);
         when(keyEvent.getText()).thenReturn("a");
@@ -73,7 +77,7 @@ public class TypingGameControllerTest {
     }
 
     @Test
-    public void styleOfTargetedWordGetsChanged() {
+    void styleOfTargetedWordGetsChanged() {
         Word word = new Word("target", new Position(10, 10));
         Label wordLabel = new Label(word.getRemainingWord());
 
@@ -87,7 +91,7 @@ public class TypingGameControllerTest {
     }
 
     @Test
-    public void styleOfNotTargetedWordDoesNotGetChanged() {
+    void styleOfNotTargetedWordDoesNotGetChanged() {
         Word word = new Word("notTarget", new Position(10, 10));
         Label wordLabel = new Label(word.getRemainingWord());
 
@@ -101,7 +105,7 @@ public class TypingGameControllerTest {
     }
 
     @Test
-    public void remainingLivesAreDisplayed() throws InterruptedException {
+    void remainingLivesAreDisplayed() throws InterruptedException {
         Pane remainingLivesView = new Pane();
         typingGameController.remainingLivesView = remainingLivesView;
         when(typingGameController.typingGame.getPlayerLives()).thenReturn(3);
@@ -111,4 +115,17 @@ public class TypingGameControllerTest {
 
         assertThat(remainingLivesView.getChildren()).hasSize(3);
     }
+
+    @Test
+    void stopwatchTimeIsDisplayedInCorrectFormat() throws InterruptedException {
+        Text stopwatchView = new Text();
+        typingGameController.stopwatchView = stopwatchView;
+        TemporalAmount time = Duration.ofSeconds(10);
+
+        typingGameController.display(time);
+        Thread.sleep(500);
+
+        assertThat(stopwatchView.getText()).isEqualTo("00:10:00");
+    }
+
 }

@@ -13,10 +13,13 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
+import java.time.Duration;
+import java.time.temporal.TemporalAmount;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TypingGameController implements DisplayPort {
+
     KeyPressListener keyPressListener;
     TypingGame typingGame;
 
@@ -24,6 +27,8 @@ public class TypingGameController implements DisplayPort {
     Pane gameFieldView;
     @FXML
     Pane remainingLivesView;
+    @FXML
+    Text stopwatchView;
 
     @FXML
     public void initialize() {
@@ -63,6 +68,20 @@ public class TypingGameController implements DisplayPort {
                 gameFieldView.getChildren().add(wordLabel);
             }
         });
+    }
+
+    @Override
+    public void display(TemporalAmount stopwatchTime) {
+        String formattedTime = format(stopwatchTime);
+        Platform.runLater(() -> {stopwatchView.setText(formattedTime);} );
+    }
+
+    private String format(TemporalAmount stopwatchTime) {
+        Duration duration = Duration.from(stopwatchTime);
+        long minutes = duration.toMinutes();
+        long seconds = duration.getSeconds() % 60;
+        long milliseconds = duration.toMillis() % 1000;
+        return String.format("%02d:%02d:%02d", minutes, seconds, milliseconds);
     }
 
     private Label createWordLabel(Word word) {

@@ -3,6 +3,7 @@ package adapter.out;
 import domain.Word;
 import domain.port.out.DisplayPort;
 
+import java.time.temporal.TemporalAmount;
 import java.util.List;
 
 public class DisplayMock implements DisplayPort {
@@ -14,6 +15,11 @@ public class DisplayMock implements DisplayPort {
     @Override
     public void display(List<Word> words) {
         this.displayedWords = words;
+    }
+
+    @Override
+    public void display(TemporalAmount stopwatchTime) {
+        System.out.println("Stopwatch time: " + stopwatchTime);
     }
 
     @Override

@@ -3,7 +3,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
+<?import javafx.scene.text.Text?>
 <AnchorPane prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="adapter.in.TypingGameController">
     <Pane fx:id="gameFieldView" onKeyPressed="#handleKeyPressed"> </Pane>
     <Pane fx:id="remainingLivesView" layoutX="50.0" layoutY="587.0"> </Pane>
+    <Pane layoutX="200.0" layoutY="587.0">
+        <Text fx:id="stopwatchView">00:00:00</Text>
+    </Pane>
 </AnchorPane>

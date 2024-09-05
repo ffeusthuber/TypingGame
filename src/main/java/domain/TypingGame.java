@@ -13,7 +13,8 @@ public class TypingGame {
 
     // Constants
     private static final int INITIAL_PLAYER_LIVES = 3;
-    private static final int DISPLAY_UPDATE_INTERVAL = 15;
+    private static final int DISPLAY_UPDATE_INTERVAL = 30;
+    private static final int STOPWATCH_UPDATE_INTERVAL = 51;
     private static final int WORD_MOVE_INTERVAL = 20;
     private static final int WORD_MOVE_STEPSIZE = 1;
     private static final int WORD_SPAWN_SPEED_UP_INTERVAL = 10000;
@@ -62,7 +63,8 @@ public class TypingGame {
 
     private void setUpTimedTasks() {
         taskManager.addTimedTasks(wordSpawnTask, wordSpawnInterval);
-        taskManager.addTimedTasks(() -> this.display(), DISPLAY_UPDATE_INTERVAL);
+        taskManager.addTimedTasks(() -> this.displayWords(), DISPLAY_UPDATE_INTERVAL);
+        taskManager.addTimedTasks(() -> this.displayStopWatch(), STOPWATCH_UPDATE_INTERVAL);
         taskManager.addTimedTasks(() -> this.moveWords(WORD_MOVE_STEPSIZE),WORD_MOVE_INTERVAL);
         taskManager.addTimedTasks(() -> this.speedUpWordSpawning(this.taskManager), WORD_SPAWN_SPEED_UP_INTERVAL);
     }
@@ -93,8 +95,12 @@ public class TypingGame {
         handleWordsInGameOverZone();
     }
 
-    void display() {
+    void displayWords() {
         display.display(gameField.getWords());
+    }
+
+    void displayStopWatch() {
+        display.display(stopwatch.getElapsedTime());
     }
 
     private void handleWordsInGameOverZone() {

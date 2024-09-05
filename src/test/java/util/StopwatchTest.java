@@ -3,6 +3,7 @@ package util;
 import org.junit.jupiter.api.Test;
 
 import java.time.Clock;
+import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.TemporalAmount;
 
@@ -14,7 +15,7 @@ public class StopwatchTest {
     void testStopwatch() {
         MutableClock clock = new MutableClock(Instant.EPOCH, Clock.systemDefaultZone().getZone());
         Stopwatch stopwatch = new Stopwatch(clock);
-        TemporalAmount runTime = java.time.Duration.ofSeconds(10);
+        TemporalAmount runTime = Duration.ofSeconds(10);
 
         stopwatch.start();
         clock.fastForward(runTime);

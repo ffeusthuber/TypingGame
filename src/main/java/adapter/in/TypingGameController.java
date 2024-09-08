@@ -102,7 +102,7 @@ public class TypingGameController implements DisplayPort {
     @Override
     public void gameOver() {
         Scene scene = gameFieldView.getScene();
-        ScreenController.getInstance(scene).activateGameOver();
+        ScreenController.getInstance(scene).activateGameOver(stopwatchView.getText());
     }
 
     private Text createLifeIcon(int index) {

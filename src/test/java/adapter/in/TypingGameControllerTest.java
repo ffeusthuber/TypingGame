@@ -67,13 +67,15 @@ public class TypingGameControllerTest {
     }
 
     @Test
-    void screenControllerActivatesGameOverScreenOnGameOver() {
+    void screenControllerActivatesGameOverScreenOnGameOverAndHandsOverStopwatchTime() {
         ScreenController mockScreenController = mock(ScreenController.class);
         ScreenController.setInstance(mockScreenController);
+        Text stopwatchView = new Text();
+        typingGameController.stopwatchView = stopwatchView;
 
         typingGameController.gameOver();
 
-        verify(mockScreenController).activateGameOver();
+        verify(mockScreenController).activateGameOver(stopwatchView.getText());
     }
 
     @Test

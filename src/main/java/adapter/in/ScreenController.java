@@ -27,18 +27,27 @@ public class ScreenController {
     }
 
     void activateTypingGame() {
-        activate("/TypingGame.fxml");
+        activateScene("/TypingGame.fxml", null);
     }
 
     void activateGameOver() {
-        activate("/GameOverMenu.fxml");
+        activateScene("/GameOverMenu.fxml", null);
     }
 
-    private void activate(String fxmlPath) {
+    void activateGameOver(String time) {
+        activateScene("/GameOverMenu.fxml", time);
+    }
+
+    private void activateScene(String fxmlPath, String parameter) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
         try {
-            main.setRoot(FXMLLoader.load(getClass().getResource(fxmlPath)));
+            main.setRoot(loader.load());
         } catch (IOException e) {
             throw new RuntimeException("Failed to load screen: " + fxmlPath, e);
+        }
+        if (parameter != null) {
+            GameOverMenuController controller = loader.getController();
+            controller.initData(parameter);
         }
     }
 }

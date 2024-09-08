@@ -9,7 +9,9 @@
             fx:controller="adapter.in.GameOverMenuController"
             prefHeight="400.0" prefWidth="600.0">
     <VBox alignment="center" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-       <Text>GAME OVER</Text>
+        <Text>GAME OVER</Text>
+        <Text>You typed for:</Text>
+        <Text fx:id="typingTimeText">00:00:000</Text>
         <Button text="Restart Game" onAction="#handleRestartButton"/>
         <Button text="Exit" onAction="#handleExitButton"/>
     </VBox>

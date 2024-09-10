@@ -1,28 +1,30 @@
 
+.root {
+    -fx-font-family: 'Helvetica, sans-serif';
+    -fx-font-size: 15px;
+    -fx-fill: black;
+}
+
+
 Label {
-    -fx-font-family: "Gill Sans", "Gill Sans MT", "Trebuchet MS", sans-serif;
     -fx-border-color: black;
     -fx-border-width: 1px;
     -fx-padding: 5px;
-    -fx-text-fill: black;
+    -fx-alignment: center;
 }
 
-.targeted-word {
-    -fx-background-color: black;
-    -fx-text-fill: #f4f4f4;
-}
-
-.life-icon {
-    -fx-font-size: 18px;
+Pane {
+    -fx-border-color: black;
+    -fx-border-width: 0 0 1px 0;
+    -fx-alignment: center;
 }
 
 VBox {
-    -fx-spacing: 10px;
+    -fx-spacing: 17.5px;
     -fx-alignment: center;
 }
 
 Button {
-    -fx-font-family: "Gill Sans", "Gill Sans MT", "Trebuchet MS", sans-serif;
     -fx-background-color: #f4f4f4;
     -fx-border-color: black;
     -fx-border-width: 1px;
@@ -34,6 +36,34 @@ Button:hover {
     -fx-background-color: black;
     -fx-text-fill: #f4f4f4;
 }
+
+.game_display_bottom {
+    -fx-spacing: 150px;
+}
+
+.header{
+    -fx-font-size: 35px;
+}
+
+.bold{
+    -fx-font-weight: bold;
+}
+
+.centered {
+    -fx-alignment: center;
+}
+
+.targeted-word {
+    -fx-background-color: black;
+    -fx-text-fill: #f4f4f4;
+}
+
+.life-icon {
+    -fx-font-size: 20px;
+    -fx-alignment: center;
+}
+
+
 
 
 

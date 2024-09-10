@@ -32,17 +32,18 @@ public class TypingGameController implements DisplayPort {
 
     @FXML
     public void initialize() {
+        typingGame = new TypingGame(this);
         initializeGameFieldView();
         startTypingGame();
     }
 
     private void initializeGameFieldView() {
+        gameFieldView.setMinHeight(typingGame.getGameField().getHeight());
         gameFieldView.setFocusTraversable(true);
         gameFieldView.requestFocus();
     }
 
     public void startTypingGame() {
-        typingGame = new TypingGame(this);
         keyPressListener = typingGame.getKeyPressListener();
         typingGame.start();
         updateLives();

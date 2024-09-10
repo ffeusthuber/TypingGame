@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="640.0" prefWidth="480.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="adapter.in.MainMenuController">
+    <HBox alignment="CENTER" prefHeight="330.0" prefWidth="480.0">
+        <ImageView fitHeight="100.0" fitWidth="100.0">
+            <Image url="@../logo.png"/>
+        </ImageView>
+        <Text text="ypingGame" styleClass="header, bold, centered">
+           <HBox.margin>
+               <Insets left="10.0"/>
+           </HBox.margin>
+        </Text>
+    </HBox>
+    <VBox alignment="center" layoutY="65.0" prefHeight="575.0" prefWidth="480.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="65.0">
+        <Button onAction="#handleStartButton" prefWidth="150.0" text="Start Game" />
+        <Button onAction="#handleHowToPlayButton" prefWidth="150.0" text="How To Play" />
+        <Button onAction="#handleExitButton" prefWidth="150.0" text="Exit" />
+    </VBox>
+</AnchorPane>

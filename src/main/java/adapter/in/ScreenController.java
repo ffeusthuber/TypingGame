@@ -27,15 +27,15 @@ public class ScreenController {
     }
 
     void activateTypingGame() {
-        activateScene("/TypingGame.fxml", null);
+        activateScene("/fxml/TypingGame.fxml", null);
     }
 
     void activateGameOver() {
-        activateScene("/GameOverMenu.fxml", null);
+        activateScene("/fxml/GameOverMenu.fxml", null);
     }
 
     void activateGameOver(String time) {
-        activateScene("/GameOverMenu.fxml", time);
+        activateScene("/fxml/GameOverMenu.fxml", time);
     }
 
     private void activateScene(String fxmlPath, String parameter) {

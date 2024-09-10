@@ -3,6 +3,7 @@ package application;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -10,21 +11,22 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
 public class TypingGameApplication extends Application {
 
     private static final Logger LOGGER = Logger.getLogger(TypingGameApplication.class.getName());
     @Override
     public void start(Stage primaryStage) {
         Scene scene = createScene();
-
         primaryStage.setScene(scene);
-        primaryStage.setTitle("TypingGame");
         primaryStage.setResizable(false);
+        primaryStage.getIcons().add(new Image("logo.png"));
+
         primaryStage.show();
     }
 
     private Scene createScene() {
-        Pane root = loadFXML("/MainMenu.fxml");
+        Pane root = loadFXML("/fxml/MainMenu.fxml");
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/style.css");
 

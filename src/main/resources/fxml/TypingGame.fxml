@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="640" prefWidth="480" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="adapter.in.TypingGameController">
+    <Pane fx:id="gameFieldView" onKeyPressed="#handleKeyPressed" prefHeight="530.0" prefWidth="480.0"> </Pane>
+    <HBox styleClass="centered, game_display_bottom" layoutY="530.0" prefHeight="110.0" prefWidth="480">
+        <HBox fx:id="remainingLivesView" styleClass="centered" prefWidth="150">
+            <Text styleClass="lifeIcon">❤</Text>
+        </HBox>
+        <HBox styleClass="centered" prefWidth="150">
+            <Text fx:id="stopwatchView">00:00:00</Text>
+        </HBox>
+    </HBox>
+
+</AnchorPane>

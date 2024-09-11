@@ -5,7 +5,6 @@
     -fx-fill: black;
 }
 
-
 Label {
     -fx-border-color: black;
     -fx-border-width: 1px;
@@ -51,6 +50,11 @@ Button:hover {
 
 .centered {
     -fx-alignment: center;
+}
+
+.bordered {
+    -fx-border-color: black;
+    -fx-border-width: 1px;
 }
 
 .targeted-word {

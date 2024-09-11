@@ -5,13 +5,13 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="640" prefWidth="480" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="adapter.in.TypingGameController">
+<AnchorPane prefHeight="640" prefWidth="480" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="adapter.in.TypingGameController">
     <Pane fx:id="gameFieldView" onKeyPressed="#handleKeyPressed" prefHeight="530.0" prefWidth="480.0"> </Pane>
     <HBox styleClass="centered, game_display_bottom" layoutY="530.0" prefHeight="110.0" prefWidth="480">
-        <HBox fx:id="remainingLivesView" styleClass="centered" prefWidth="150">
+        <HBox fx:id="remainingLivesView" styleClass="centered, bordered" prefWidth="100" maxHeight="50">
             <Text styleClass="lifeIcon">❤</Text>
         </HBox>
-        <HBox styleClass="centered" prefWidth="150">
+        <HBox styleClass="centered, bordered" prefWidth="100" maxHeight="50">
             <Text fx:id="stopwatchView">00:00:00</Text>
         </HBox>
     </HBox>

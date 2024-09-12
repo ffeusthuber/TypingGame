@@ -65,7 +65,7 @@ To get a local copy of the project up and running, follow these steps:
 
 1. Clone the repository:
     ```sh
-    git clone https://github.com/ffeusthuber/typing-game.git
+    git clone https://github.com/ffeusthuber/TypingGame.git
     cd TypingGame
     ```
 

@@ -1,9 +1,11 @@
 package adapter.in;
 
+import javafx.embed.swing.JFXPanel;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,6 +16,11 @@ class MenuControllerTest {
     private ActionEvent actionEventMock;
     private ScreenController mockScreenController;
     private Stage mockStage;
+
+    @BeforeAll
+    public static void initJFX() {
+        new JFXPanel();
+    }
 
     @BeforeEach
     void setUp() {

@@ -1,7 +1,9 @@
 package adapter.in;
 
+import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,6 +13,11 @@ import static org.mockito.Mockito.*;
 class ScreenControllerTest {
 
     private Scene mockScene;
+
+    @BeforeAll
+    public static void initJFX() {
+        new JFXPanel();
+    }
 
     @BeforeEach
     void setUp() {

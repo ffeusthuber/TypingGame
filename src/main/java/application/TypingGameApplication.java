@@ -20,7 +20,7 @@ public class TypingGameApplication extends Application {
         Scene scene = createScene();
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
-        primaryStage.getIcons().add(new Image("logo.png"));
+        primaryStage.getIcons().add(new Image("pictures/logo.png"));
 
         primaryStage.show();
     }

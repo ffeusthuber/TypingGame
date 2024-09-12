@@ -20,11 +20,14 @@ public class MainMenuController {
         stage.close();
     }
 
-    private Stage getStageFromEvent(ActionEvent actionEvent) {
-        return (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+    @FXML
+    public void handleHowToPlayButton(ActionEvent actionEvent) {
+        Scene scene = getSceneFromEvent(actionEvent);
+        ScreenController.getInstance(scene).activateHowToPlay();
     }
 
-    public void handleHowToPlayButton(ActionEvent actionEvent) {
+    private Stage getStageFromEvent(ActionEvent actionEvent) {
+        return (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
     }
 
     private Scene getSceneFromEvent(ActionEvent actionEvent) {

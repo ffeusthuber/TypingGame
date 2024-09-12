@@ -19,12 +19,15 @@
         <li><a href="#running-tests">Running Tests</a></li>
       </ul>
     </li>
-    <li><a href="#license">License</a></li>
+   <li><a href="#screenshots">Screenshots</a></li>
+   <li><a href="#license">License</a></li>
   </ol>
 </details>
 
-<div style="text-align:center">
-   <img src="src/main/resources/images/logo.png" alt="Logo" width="80" height="80">
+<div align="center">
+   <a href="https://github.com/ffeusthuber/TypingGame">
+    <img src="src/main/resources/images/logo.png" alt="Logo" width="80" height="80">
+  </a>
 </div>
 
 ## About the project
@@ -38,7 +41,7 @@ This project is a Java-based typing game application built with JavaFX. The main
 
 In this game, the player must type words before they reach the bottom of the screen. The objective is to type for as long as possible without running out of lives.
 
-<p style="text-align: right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Built With
 - **Java**: The core programming language.
@@ -47,7 +50,7 @@ In this game, the player must type words before they reach the bottom of the scr
 - **JUnit**: Framework for writing and running unit tests.
 - **Mockito**: Library for creating mock objects in tests.
 
-<p style="text-align: right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Getting Started
 
@@ -83,7 +86,24 @@ To run the tests and ensure the application functions as intended, use the follo
 mvn test
 ```
 
-<p style="text-align: right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Screenshots
+<div align="center">
+   <a href="https://github.com/ffeusthuber/TypingGame">
+    <img src="src/main/resources/images/mainmenu_screenshot.png" alt="Main Menu">
+  </a>
+<br/>
+   <a href="https://github.com/ffeusthuber/TypingGame">
+    <img src="src/main/resources/images/gameplay_screenshot.png" alt="Gameplay">
+  </a>
+<br/>
+   <a href="https://github.com/ffeusthuber/TypingGame">
+    <img src="src/main/resources/images/gameover_screenshot.png" alt="GameOver">
+  </a>
+</div>
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## License
 
@@ -94,5 +114,5 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <li><a href="https://www.flaticon.com/free-icons/typing" title="typing icons">Typing icons created by Freepik - Flaticon</a></li>
 </ul>
 
-<p style="text-align: right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 

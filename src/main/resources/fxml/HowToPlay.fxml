@@ -13,7 +13,7 @@
    <VBox alignment="CENTER" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0">
          <StackPane maxWidth="-Infinity" styleClass="bordered">
                <ImageView fitWidth="260.0" pickOnBounds="true" preserveRatio="true">
-                     <Image url="@../pictures/how-to-play_screenshot.png" />
+                     <Image url="@../images/how-to-play_screenshot.png" />
                </ImageView>
          </StackPane>
          <VBox maxHeight="205.0" maxWidth="480.0" prefHeight="205.0" prefWidth="592.0" spacing="5.0">
